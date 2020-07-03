@@ -1,0 +1,18 @@
+Plant_genus	Yeast_sp	Observed	pval	Yeast_freq	Plant_freq
+Alnus	Nakazawaea anatomiae/populi sp. complex	2	0	10	5
+Amanita	Teunomyces cretensis/kruisii complex	2	7e-04	15	6
+Amanita	Vanrija humicola	2	5e-04	7	6
+Betula	Kwoniella betulae	3	3e-04	3	86
+Cercis	Metschnikowia pulcherrima sp. complex	5	0	51	12
+Festuca	Wickerhamomyces onychis	2	2e-04	4	6
+Morus	Papiliotrema flavescens	2	8e-04	5	16
+Picea	Kazachstania servazzii	2	9e-04	8	11
+Picea	Sydowia polyspora	2	1e-04	4	11
+Pinus	Schwanniomyces polymorphus	4	0	6	50
+Quercus	Lachancea fermentati	9	0	16	166
+Quercus	Lachancea thermotolerans	11	9e-04	39	166
+Quercus	Kluyveromyces lactis	10	1e-04	26	166
+Taraxacum	Zygowilliopsis californica	2	0	3	3
+Taxus	Candida coipomoensis	2	0	2	5
+Thuja	Debaryomyces hansenii	3	6e-04	9	23
+Vaccinium	Curvibasidium cygneicollum	3	9e-04	19	14

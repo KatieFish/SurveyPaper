@@ -7,7 +7,7 @@ col2<-which(colnames(all_observations_dataframe)==colnames_to_permute[2])
 #
 Permutation_df<-data.frame(table(all_observations_dataframe[,col1],
                                    all_observations_dataframe[,col2]))
-colnames(Permutation_df)<-c("Plant_genus", "Yeast_sp", "Observed")
+colnames(Permutation_df)<-c(colnames_to_permute[1], colnames_to_permute[2], "Observed")
 #set up column to tally totals in
 
 to_permute_df<-all_observations_dataframe[c(col1, col2)]
