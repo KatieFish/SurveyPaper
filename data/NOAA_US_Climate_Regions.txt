@@ -1,0 +1,50 @@
+State_code	Region	State	Abbrev
+AK	Arctic	Alaska	Alaska
+AL	Southeast	Alabama	Ala.
+AR	South	Arkansas	Ark.
+AZ	Southwest	Arizona	Ariz.
+CA	West	California	Calif.
+CO	Southwest	Colorado	Colo.
+CT	Northeast	Connecticut	Conn.
+DE	Northeast	Delaware	Del.
+FL	Southeast	Florida	Fla.
+GA	Southeast	Georgia	Ga.
+IA	Upper Midwest	Iowa	Iowa
+ID	Northwest	Idaho	Idaho
+IL	Ohio Valley	Illinois	Ill.
+IN	Ohio Valley	Indiana	Ind.
+KS	South	Kansas	Kans.
+KY	Ohio Valley	Kentucky	Ky.
+LA	South	Louisiana	La.
+MA	Northeast	Massachusetts	Mass.
+MD	Northeast	Maryland	Md.
+ME	Northeast	Maine	Maine
+MI	Upper Midwest	Michigan	Mich.
+MN	Upper Midwest	Minnesota	Minn.
+MO	Ohio Valley	Missouri	Mo.
+MS	South	Mississippi	Miss.
+MT	Northern Rockies and Plains	Montana	Mont.
+NC	Southeast	North Carolina	N.C.
+ND	Northern Rockies and Plains	North Dakota	N.D.
+NE	Northern Rockies and Plains	Nebraska	Nebr.
+NH	Northeast	New Hampshire	N.H.
+NJ	Northeast	New Jersey	N.J.
+NM	Southwest	New Mexico	N.M.
+NV	West	Nevada	Nev.
+NY	Northeast	New York	N.Y.
+OH	Ohio Valley	Ohio	Ohio
+OK	South	Oklahoma	Okla.
+OR	Northwest	Oregon	Ore.
+PA	Northeast	Pennsylvania	Pa.
+RI	Northeast	Rhode Island	R.I.
+SC	Southeast	South Carolina	S.C.
+SD	Northern Rockies and Plains	South Dakota	S.D.
+TN	Ohio Valley	Tennessee	Tenn.
+TX	South	Texas	Tex.
+UT	Southwest	Utah	Utah
+VA	Southeast	Virginia	Va.
+VT	Northeast	Vermont	Vt.
+WA	Northwest	Washington	Wash.
+WI	Upper Midwest	Wisconsin	Wis.
+WV	Ohio Valley	West Virginia	W.Va.
+WY	Northern Rockies and Plains	Wyoming	Wyo.
