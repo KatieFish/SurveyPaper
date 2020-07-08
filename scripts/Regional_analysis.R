@@ -1,4 +1,6 @@
-
+raw_WY_dataframe<-read.csv("~/SurveyPaper/data/WY_df_2018-02-08.csv",
+                           header=TRUE, stringsAsFactors=FALSE,
+                           strip.white=TRUE)
 
 Species_by_location_DF<-raw_WY_dataframe[c(1,25,29)]
 Species_by_location_DF<-Species_by_location_DF[which(!is.na(Species_by_location_DF$State)),]
@@ -9,9 +11,10 @@ locations_by_sp<-locations_by_sp[which(locations_by_sp$Freq>0),]
 colnames(locations_by_sp)<-c("Species", "State", "Freq")
 #621 unique state x species combinations
 #360 spp. isolated from more than one state
-climate_regions<-read.delim("~/SurveyPaper/data/NOAA_US_Climate_Regions.txt",
+climate_regions<-read.delim("~/SurveyPaper/data/tables_for_scripts/NOAA_US_Climate_Regions.txt",
                             stringsAsFactors=FALSE)
 climate_regions<-climate_regions[c(2,3)]
+
 regions_by_sp<-merge(Species_by_location_DF, climate_regions, by="State")
 tbl<-data.frame(table(regions_by_sp$Species, regions_by_sp$Region))
 tbl<-tbl[which(tbl$Freq>0),]
@@ -75,16 +78,18 @@ write.table(Kluyveromyces_spp_for_analysis, "~/SurveyPaper/data/Geographical_ana
 ####tree beginnings
 #color pallette
 library(RColorBrewer)
-n <- length(unique(climate_regions$Region))
-qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
-set.seed(2423)
-col=sample(col_vector, n)
-pie(rep(1,n), col=col)
-regional_color_key<-data.frame(unique(climate_regions$Region), col)
+require(plot3D)
+n <- 10
+col_vector = brewer.pal(n, "Paired")
+regional_color_key<-data.frame(unique(climate_regions$Region), col_vector)
 colnames(regional_color_key)<-c("Region", "col")
 write.table(regional_color_key, "~/SurveyPaper/data/Geographical_analysis/regional_color_key.tsv",
             sep="\t", quote=FALSE, row.names=FALSE)
+par(mar=c(1,1,1,1))
+pie(rep(1, length(col_vector)), 
+    labels=regional_color_key$Region, col=as.character(regional_color_key$col))
+#quartz.save("~/SurveyPaper/data/Geographical_analysis/Regional_color_key.pdf", type="pdf")
+
 ###
 
 require(tidyr)
@@ -98,4 +103,8 @@ tips2<-merge(tips2, regional_color_key, by="Region")
 tips2$col<-as.character(tips2$col)
 tips2<-tips2[order(tips2$order),]
 
-plot(tree, edge.color = tips2$col)
+plot(tree, tip.color = tips2$col,
+     use.edge.length = FALSE, edge.width=2)
+color.terminal.branches(tree, cols=tips2$col, edge.width=2, show.tip.label=TRUE)
+
+

@@ -1,0 +1,50 @@
+State_code	Region	State	Abbrev	FIPS
+AL	Southeast	Alabama	Ala.	01
+AK	Arctic	Alaska	Alaska	02
+AZ	Southwest	Arizona	Ariz.	04
+AR	South	Arkansas	Ark.	05
+CA	West	California	Calif.	06
+CO	Southwest	Colorado	Colo.	08
+CT	Northeast	Connecticut	Conn.	09
+DE	Northeast	Delaware	Del.	10
+FL	Southeast	Florida	Fla.	12
+GA	Southeast	Georgia	Ga.	13
+ID	Northwest	Idaho	Idaho	16
+IL	Ohio Valley	Illinois	Ill.	17
+IN	Ohio Valley	Indiana	Ind.	18
+IA	Upper Midwest	Iowa	Iowa	19
+KS	South	Kansas	Kans.	20
+KY	Ohio Valley	Kentucky	Ky.	21
+LA	South	Louisiana	La.	22
+ME	Northeast	Maine	Maine	23
+MD	Northeast	Maryland	Md.	24
+MA	Northeast	Massachusetts	Mass.	25
+MI	Upper Midwest	Michigan	Mich.	26
+MN	Upper Midwest	Minnesota	Minn.	27
+MS	South	Mississippi	Miss.	28
+MO	Ohio Valley	Missouri	Mo.	29
+MT	Northern Rockies and Plains	Montana	Mont.	30
+NE	Northern Rockies and Plains	Nebraska	Nebr.	31
+NV	West	Nevada	Nev.	32
+NH	Northeast	New Hampshire	N.H.	33
+NJ	Northeast	New Jersey	N.J.	34
+NM	Southwest	New Mexico	N.M.	35
+NY	Northeast	New York	N.Y.	36
+NC	Southeast	North Carolina	N.C.	37
+ND	Northern Rockies and Plains	North Dakota	N.D.	38
+OH	Ohio Valley	Ohio	Ohio	39
+OK	South	Oklahoma	Okla.	40
+OR	Northwest	Oregon	Ore.	41
+PA	Northeast	Pennsylvania	Pa.	42
+RI	Northeast	Rhode Island	R.I.	44
+SC	Southeast	South Carolina	S.C.	45
+SD	Northern Rockies and Plains	South Dakota	S.D.	46
+TN	Ohio Valley	Tennessee	Tenn.	47
+TX	South	Texas	Tex.	48
+UT	Southwest	Utah	Utah	49
+VT	Northeast	Vermont	Vt.	50
+VA	Southeast	Virginia	Va.	51
+WA	Northwest	Washington	Wash.	53
+WV	Ohio Valley	West Virginia	W.Va.	54
+WI	Upper Midwest	Wisconsin	Wis.	55
+WY	Northern Rockies and Plains	Wyoming	Wyo.	56
