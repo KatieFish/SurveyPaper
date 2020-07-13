@@ -2,7 +2,7 @@
 ###################################################
 
 #STEP 1 - set the species (spell it right)
-species<-"Torulaspora delbrueckii"
+species<-"Saccharomyces eubayanus"
 
 require(tidyr)
 require(ape)
@@ -45,7 +45,7 @@ p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
   coord_equal()
 
 ####STEP 2 - SET THE TREE
-tree<-read.tree("/Users/katiefisher/SurveyPaper/data/Geographical_analysis/Intra_species/FASTA_files/trees/Schwanniomyces_pseudopolymorphus-ML-BS.tree")
+tree<-read.tree("/Users/katiefisher/SurveyPaper/data/Geographical_analysis/Intra_species/FASTA_files/trees/Saccharomyces_eubayanus-ML.tree")
 tips<-data.frame(tree$tip.label)
 tips<-tips %>% separate(tree.tip.label, c("Gen", "Sp", "StrainID"))
 tips$order<-c(1:nrow(tips))
@@ -54,7 +54,7 @@ tips2<-merge(tips2, regional_color_key, by="Region")
 tips2$col<-as.character(tips2$col)
 tips2<-tips2[order(tips2$order),]
 par(mar=c(.1,.1,.1,.1))
-plot(tree, tip.color = tips2$col, show.node.label=TRUE ,
+plot(tree, tip.color = tips2$col,
     use.edge.length = FALSE, edge.width=2
      )
 p2<-recordPlot()
