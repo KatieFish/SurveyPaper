@@ -8,7 +8,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactacttctact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactacttctact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatctaatgatcct-tccgca------------------
 ------------------------------
@@ -148,7 +148,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-actccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcagtaaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaa---------------------------------------------------
 ------------------------------
@@ -162,7 +162,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaaact-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatct----------------------------------
 ------------------------------
@@ -232,7 +232,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaaact-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcagtaaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatctaatgatcc--------------------------
 ------------------------------
@@ -260,7 +260,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactacttccact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactacttccact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatctaatgatcct-tccgc-------------------
 ------------------------------
@@ -316,7 +316,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaaact-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatctnatgatcct-tccgcag-----------------
 ------------------------------
@@ -330,7 +330,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaaact-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctnaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-naagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgat--------------------------------------------
 ------------------------------
@@ -344,7 +344,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactacttctact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactacttctact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatctaatgatcct-tc----------------------
 ------------------------------
@@ -358,7 +358,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaaact-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcantaaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgatnattcaatctaatgatcc--------------------------
 ------------------------------
@@ -372,7 +372,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaaact-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactntaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactnt-aaagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatctaatgatcc--------------------------
 ------------------------------
@@ -386,7 +386,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactacttccact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactacttccact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgat--------------------------------------------
 ------------------------------
@@ -414,7 +414,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaaact-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatct----------------------------------
 ------------------------------
@@ -442,7 +442,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcnataaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgat--------------------------------------------
 ------------------------------
@@ -456,7 +456,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactacttcnact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactacttcnact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcantaaagataca-cattattgt-aaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatctaatgatcct-tccgcaggttc-------------
 ------------------------------
@@ -498,7 +498,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactacttctact-gcgacactctaga-gaagcagcg
+gcgttgact-gagattcaagcaagactacttctact-gcgacactct-agagaagcagcg
 caattaagcgcacatcttcaataaagataca-cattattgt-aaaagatctaaacaa---
 ------------------------------------------------------------
 ------------------------------
@@ -540,10 +540,10 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaaact-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcagtaaagataca-cattattgt-aaaagatctaaacaagaa
-ctcgagcaacaatgataattcaatctaatgatcct-tccgcaggttcacc----------
-----------------------------ta
+ctcgagcaacaatgataattcaatctaatgatcct-tccgcaggttcaccta--------
+------------------------------
 >Hanseniaspora_uvarum_yHQL35
 ---gattgaggtcaactt-gatgaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
@@ -568,7 +568,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactcaaaa-gaaacagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactca-aaagaaacagcg
 caattaagcgcacatcttcaataaaaataca-cattattgt-aaaagatctaaacaagaa
 ctcga-------------------------------------------------------
 ------------------------------
@@ -671,7 +671,7 @@ aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-c--------------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL50
----gattgaggtc-aacttgatgaatattaaaagcaaccctttgcctaaggtacgattac
+---gattgaggtcaactt-gatgaatattaaaagcaaccctttgcctaaggtacgattac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -727,7 +727,7 @@ aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa----------------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL69
------attgaggc-aacttgaggaatattaaaagcaaccctttgcctaaggtacg-ttac
+-----attgaggcaactt-gaggaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -736,7 +736,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttagnaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactacttctact-gcgacactctaaa-gaagc----
+gcgttgact-gagattcaagcaagactacttctact-gcgacactct-aaagaagc----
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------
@@ -750,12 +750,12 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccnatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttca----------------------------------------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL76
-tcctgattgaggc-aacttgaggaatattaaaagcaaccctttgcctaaggtacg-ttac
+tcctgattgaggcaactt-gaggaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -764,12 +764,12 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcggtgactggagattccagccagactacctctactggcgacactctaaa-ggagccgcc
+gcggtgactggagattccagccagactacctctactggcgacactct-aaaggagccgcc
 caatttagcgcacctcctccataaaggtacaccattaatgggaaaagaatctaacaggac
 ttcgaggcacaatggttattccatcttatgggccggtccggagggttc------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL87
--ctgattgaggtc-aacttgatgaatattaaaagcaaccctttgcctaaggtacgattac
+-ctgattgaggtcaactt-gatgaatattaaaagcaaccctttgcctaaggtacgattac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -778,7 +778,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-cccatgggtgta
-acgttgact-gaaaatccagccagactacttctact-gccacactcttaa-gaagcagcg
+acgttgact-gaaaatccagccagactacttctact-gccacactct-taagaagcagcg
 ccattaagcgcacatcttccataaagataca-cattaatgt-aaaagatcctaaccagaa
 ctccagcaa---------------------------------------------------
 ------------------------------
@@ -806,12 +806,12 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-cccatgggngna
-ncgntnacn-ggaantccagccagannacntntacn-ggganactnttaa-gaanccncn
+ncgntnacn-ggaantccagccagannacntntacn-ggganactnt-taagaanccncn
 cnattnancncncatcntccataaaga---------------------------------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL90
-ccggattgaggtc-aacttgatgaatattanaagcanccctttgcctaaggtacg-ttac
+ccggattgaggtcaactt-gatgaatattanaagcanccctttgcctaaggtacg-ttac
 ca-tttccctt-gctaaa-gtaaaacgaataaatccataaatacatcncagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -839,7 +839,7 @@ aacctttcgattcnnagcagaaagaattaaattanagtaaaaaa-ac-tcc---------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL94
-------------c-aacttgatgaatattaaaagcaaccctttgcctaaggtacg-ttac
+------------caactt-gatgaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -848,12 +848,12 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-cccatgggtgta
-gcgttgact-gaaattccagccagactacttctact-gcgacactcttaa-gaagcagcg
+gcgttgact-gaaattccagccagactacttctact-gcgacactct-taagaagcagcg
 caattaagcgcacatcttccataaagataca-cattaatgg-aaaagatctaaac-----
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL96
---ctgattgaggc-aacttgatgaatattaaaagcaaccctttgcctaaggtacg-ttac
+--ctgattgaggcaactt-gatgaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -862,7 +862,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttagaaa-
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttcagtaaagataca-cattattgtaaaaagatctaaacaagaa
 ctcgagcaacaatgataattcaatctaatggatccttccgcaggttccccctaccggaag
 ggtcctttggaattggaattaacattgttg
@@ -932,7 +932,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-actccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttca----------------------------------------
 ------------------------------------------------------------
 ------------------------------
@@ -988,7 +988,7 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ct-ccaatgtgtgta
-gcgttgact-gagattcaagcaagactactttcact-gcgacactctaaa-gaagcagcg
+gcgttgact-gagattcaagcaagactactttcact-gcgacactct-aaagaagcagcg
 caattaagcgcacatcttc-----------------------------------------
 ------------------------------------------------------------
 ------------------------------
@@ -1049,7 +1049,7 @@ aacctttcgattcaaagcagaaagaattaaattaaagtaaaaa-----------------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL52
----------------cttgaatgaatattaaaagcaaccctttgcctaaggtacg-ttac
+--------------cttg-aatgaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacntcacagcgagaacag
 cgtctccnaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -1072,20 +1072,6 @@ gattcacgagtatctgcaattcacattacttatcgcaattcgctacgttcttcatcgatg
 cgagaaccaagagatccgttgttgaaagttttaaattattttaaaatttccgttaggaat
 tttggtttagtttaaaaaattataataaaataaaattgtttgtgtttgttttttgccttg
 aacctttcgattc-----------------------------------------------
-------------------------------------------------------------
-------------------------------------------------------------
-------------------------------------------------------------
-------------------------------
->Hanseniaspora_uvarum_yHQL194
---------------------------------------cctttgcctaaggtacg-ttac
-ca-tttccctt--gtaaa-gtaaaacgaataaatccntaaatacatcacagcgagaacag
-cgtctccnaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcnagc
-taaccctgagtatcgcccacaaccnaaaaataataaattatcttttgagaaggaaatgac
-g-----------------------------------------------------------
-------------------------------------------------------------
-------------------------------------------------------------
-------------------------------------------------------------
-------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
 ------------------------------------------------------------
@@ -1147,7 +1133,7 @@ aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa----------------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL342
-----------------cttgatgaatattaaaagcaaccctttgcctaaggtacgcttac
+---------------ctt-gatgaatattaaaagcaaccctttgcctaaggtacgcttac
 cactttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -1175,7 +1161,7 @@ aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa-ac-tccaa-------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHQL354
------ttgaggtc-aacttgatgaatattaaaagcaaccctttgcctaaggtacg-ttac
+-----ttgaggtcaactt-gatgaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt-ggtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -1273,7 +1259,7 @@ aacctttcgattc-----------------------------------------------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHRVM45
-----tttgaggtc-aacttgatgaatattaaaagcaaccctttgcctaaggtacg-ttac
+----tttgaggtcaactt-gatgaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctcc-aagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac
@@ -1287,7 +1273,7 @@ aacctttcgattcaaagcagaaagaattaaattaaagtaaaaaa----------------
 ------------------------------------------------------------
 ------------------------------
 >Hanseniaspora_uvarum_yHRVM118
----------------cttggatgaatattaaaagcaaccctttgcctaaggtacg-ttac
+--------------cttg-gatgaatattaaaagcaaccctttgcctaaggtacg-ttac
 ca-tttccctt--gtaaa-gtaaaacgaataaatccataaatacatcacagcgagaacag
 cgtctccaaagaagctaagtgttgaattaaaaaagactgaaacagtctccaatttcaagc
 taaccctgagtatcgcccacaaccaaaaaataataaattatcttttgagaaggaaatgac

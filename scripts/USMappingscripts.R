@@ -2,7 +2,7 @@
 ###################################################
 
 #STEP 1 - set the species (spell it right)
-species<-"Kluyveromyces marxianus"
+species<-"Torulaspora delbrueckii"
 
 require(tidyr)
 require(ape)
@@ -45,7 +45,7 @@ p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
   coord_equal()
 
 ####STEP 2 - SET THE TREE
-tree<-read.tree("/Users/katiefisher/SurveyPaper/data/Geographical_analysis/Intra_species/FASTA_files/trees/Kluyveromyces_marxianus.tree")
+tree<-read.tree("/Users/katiefisher/SurveyPaper/data/Geographical_analysis/Intra_species/FASTA_files/trees/Schwanniomyces_pseudopolymorphus-ML-BS.tree")
 tips<-data.frame(tree$tip.label)
 tips<-tips %>% separate(tree.tip.label, c("Gen", "Sp", "StrainID"))
 tips$order<-c(1:nrow(tips))
@@ -54,12 +54,13 @@ tips2<-merge(tips2, regional_color_key, by="Region")
 tips2$col<-as.character(tips2$col)
 tips2<-tips2[order(tips2$order),]
 par(mar=c(.1,.1,.1,.1))
-plot(tree, tip.color = tips2$col,
-     use.edge.length = FALSE, edge.width=2)
+plot(tree, tip.color = tips2$col, show.node.label=TRUE ,
+    use.edge.length = FALSE, edge.width=2
+     )
 p2<-recordPlot()
 
 #STEP 3 - CHANGE THE NAME OF THE FIGURE
-pdf("~/SurveyPaper/data/Geographical_analysis/Intra_species/Kluyveromyces_marxianus.pdf", height=8, width=6)
+pdf("~/SurveyPaper/data/Geographical_analysis/Intra_species/Torulaspora_delbrueckii.pdf", height=20, width=6)
 plot_grid(p2, p1,
           nrow = 2, rel_heights = c(2, 1))
 dev.off()

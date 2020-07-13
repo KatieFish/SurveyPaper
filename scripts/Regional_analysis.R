@@ -1,4 +1,4 @@
-raw_WY_dataframe<-read.csv("~/SurveyPaper/data/WY_df_2018-02-08.csv",
+raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
                            header=TRUE, stringsAsFactors=FALSE,
                            strip.white=TRUE)
 
@@ -91,20 +91,17 @@ pie(rep(1, length(col_vector)),
 #quartz.save("~/SurveyPaper/data/Geographical_analysis/Regional_color_key.pdf", type="pdf")
 
 ###
+#Figured out how to pull all ITS out of labDB: 
 
-require(tidyr)
-require(ape)
-tree<-read.tree("~/Downloads/phylo.io.nwk")
-tips<-data.frame(tree$tip.label)
-tips<-tips %>% separate(tree.tip.label, c("Gen", "Sp", "StrainID"))
-tips$order<-c(1:nrow(tips))
-tips2<-merge(tips, regions_by_sp[c(2,4)], by="StrainID")
-tips2<-merge(tips2, regional_color_key, by="Region")
-tips2$col<-as.character(tips2$col)
-tips2<-tips2[order(tips2$order),]
+all_ITS<-read.delim("~/SurveyPaper/data/tables_for_scripts/All_ITS_seq.txt",header=TRUE, stringsAsFactors=FALSE)
 
-plot(tree, tip.color = tips2$col,
-     use.edge.length = FALSE, edge.width=2)
-color.terminal.branches(tree, cols=tips2$col, edge.width=2, show.tip.label=TRUE)
+StrainIDs<-raw_WY_dataframe[c(1,29)]
+spp_for_regional_analysis<-merge(spp_for_regional_analysis, StrainIDs, by="Species")
+spp_for_regional_analysis<-merge(spp_for_regional_analysis, all_ITS, by="StrainID")
+spp_for_regional_analysis<-spp_for_regional_analysis[c(2,3,4,1,5)]
 
+spp_for_regional_analysis<-spp_for_regional_analysis[order(
+  spp_for_regional_analysis$No.Regions, decreasing = TRUE, spp_for_regional_analysis$Species),]
 
+write.table(spp_for_regional_analysis, "~/SurveyPaper/data/tables_for_scripts/Species_and_ITS_seq_for_regional_analyses.tsv",
+            sep="\t", quote=FALSE, row.names=FALSE)
