@@ -1,0 +1,19 @@
+Species	Substrate	Observed	Expected	P-value	Padj.
+Candida albicans	Soil	3	3.104	0.685	1
+Candida albicans	Plantae	4	3.365	0.441	1
+Candida albicans	Fungi	0	0.531	1	1
+Meyerozyma guilliermondii	Soil	3	2.669	0.548	1
+Meyerozyma guilliermondii	Plantae	2	2.872	0.887	1
+Meyerozyma guilliermondii	Fungi	1	0.459	0.404	1
+Candida tropicalis	Soil	7	4.071	0.037	0.333
+Candida tropicalis	Plantae	2	4.255	0.989	1
+Candida tropicalis	Fungi	0	0.674	1	1
+Candida parapsilosis	Soil	2	1.375	0.427	1
+Candida parapsilosis	Plantae	1	1.422	0.865	1
+Candida parapsilosis	Fungi	0	0.203	1	1
+Pichia kudriavzevii	Soil	1	4.544	0.998	1
+Pichia kudriavzevii	Plantae	9	4.694	0.002	0.036
+Pichia kudriavzevii	Fungi	0	0.762	1	1
+Candida glabrata	Soil	2	1.35	0.422	1
+Candida glabrata	Plantae	0	1.423	1	1
+Candida glabrata	Fungi	1	0.227	0.209	1

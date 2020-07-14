@@ -3,9 +3,11 @@
 
 
 require(ggplot2)
+require(ggpubr)
+require(chisq.posthoc.test)
 
 #Read in the dataframe and convert blank cells to NA
-raw_WY_dataframe<-read.csv("~/WY_df_2018-02-08.csv",
+raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
                   header=TRUE, stringsAsFactors=FALSE,
                   na.strings=c("","NA"),
                   strip.white=TRUE)
@@ -39,6 +41,161 @@ b<-ggplot(set_isolates, aes(Freq))+
 ggarrange(a, b, nrow=2)
 quartz.save("~/SurveyPaper/Isolate_isolations_hist.pdf", type="pdf")
 
+#singleton descriptive figure/table
+
+#chisq for proportions amongst subphyla
+tbl_all_set<-data.frame(table(unique(raw_WY_dataframe[c(22,29,30)])$Subphylum))
+tbl_singletons<-data.frame(table(unique(singletons_df[c(22,29,30)])$Subphylum))
+singleton_subphylum_chisq<-merge(tbl_all_set, tbl_singletons, by="Var1", all=TRUE)
+colnames(singleton_subphylum_chisq)<-c("Subphylum", "Expected", "Observed")
+singleton_subphylum_chisq$Expected<-singleton_subphylum_chisq$Expected/(sum(singleton_subphylum_chisq$Expected))
+singleton_subphylum_chisq$Observed[4]<-0
+singleton_subphylum_chisq_mat<-as.matrix(singleton_subphylum_chisq[c(1:3),c(2:3)])
+chisq.test(singleton_subphylum_chisq_mat)
+#Nonsignificant - p=.918
+#                 df =2
+#                 x2=0.17114
+chisq.posthoc.test(x=singleton_subphylum_chisq_mat)
+
+
+
+singletons<-as.character(set_isolates[which(set_isolates$Freq==1),1])
+singletons_df<-raw_WY_dataframe[which(raw_WY_dataframe$Species %in% singletons),]
+write.table(singletons_df, "~/SurveyPaper/data/Singletons.tsv", sep="\t", quote=FALSE)
+toplot<-unique(singletons_df[c(29,30,31)])
+a<-ggplot(toplot, aes(x=Subphylum))+
+  geom_bar()+
+  ylab("No.")+
+  xlab("")+
+  ylim(0, 70)+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
+  ggtitle("Singletons\nby subphylum")
+
+#chisq singleton substrate
+tbl_all_set<-data.frame(table(unique(raw_WY_dataframe[c(22,29,10)])$Specific))
+tbl_singletons<-data.frame(table(unique(singletons_df[c(22,29,10)])$Specific))
+singleton_substr_chisq<-merge(tbl_all_set, tbl_singletons, by="Var1", all=TRUE)
+colnames(singleton_substr_chisq)<-c("Substrate", "Expected", "Observed")
+singleton_substr_chisq[is.na(singleton_substr_chisq)]<-0
+singleton_substr_chisq$Expected<-singleton_substr_chisq$Expected/(sum(singleton_substr_chisq$Expected))
+singleton_substr_chisq_mat<-as.matrix(singleton_substr_chisq[c(2:3)])
+chisq.test(singleton_substr_chisq_mat)
+#Nonsignificant - X-squared = 5.2249, df = 39, p-value = 1
+fisher.test(singleton_substr_chisq_mat)
+#Nonsignificant p=1
+chisq.posthoc.test(x=singleton_substr_chisq_mat)
+
+toplot<-unique(singletons_df[c(22,29,10)])
+b<-ggplot(toplot, aes(x=Specific))+
+  geom_bar()+
+  ylab("No.")+
+  xlab("")+
+  ylim(0, 40)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  ggtitle("Singletons by substrate")
+
+  #run mapping script lines 7:28
+  singletons_us<-singletons_df#[which(!is.na(singletons_df$State)),]
+  p0 <- ggplot(data = us_states,
+               mapping = aes(x = long, y = lat,
+                             group = group, fill = Clim.Region))
+p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
+  scale_fill_manual(values = color_key$col)+
+  theme_bw()+
+  geom_jitter(data=singletons_us, aes(x=Long, y=Lat), 
+              inherit.aes = FALSE, width=.5, shape=1)+ 
+  theme(legend.position = "none")+
+  ggtitle("Singleton isolation locations")
+  coord_equal()
+
+ggarrange(b, a, p1, widths=c(2,1))
+quartz.save("~/SurveyPaper/Figures/Singleton_descriptive_figure.pdf", type="pdf")
+
+#cosmopolitan descriptive figure/table
+#cosomo def - current - species isolated z times or more from 2 different regions
+z<-3
+n<-z*2
+n_or_more<-as.character(set_isolates[which(set_isolates$Freq>=n),1])
+n_or_more<-raw_WY_dataframe[which(raw_WY_dataframe$Species %in% n_or_more),]
+regions<-read.delim("~/SurveyPaper/data/tables_for_scripts/NOAA_US_Climate_Regions.txt",
+                    header=TRUE, stringsAsFactors=FALSE)
+cosmodf<-merge(n_or_more, regions[c(2:3)], by="State")
+tbl<-data.frame(table(cosmodf$Species, cosmodf$Region))
+tbl<-tbl[which(tbl$Freq>=3),]
+repeats<-which(duplicated(tbl$Var1))
+cosmo_sp<-as.character(tbl$Var1[repeats])
+cosmodf<-cosmodf[which(cosmodf$Species %in% cosmo_sp),]
+
+#chisq for proportions amongst subphyla
+tbl_all_set<-data.frame(table(unique(raw_WY_dataframe[c(22,29,30)])$Subphylum))
+tbl_cosmos<-data.frame(table(unique(cosmodf[c(22,29,30)])$Subphylum))
+cosmo_subphylum_chisq<-merge(tbl_all_set, tbl_cosmos, by="Var1", all=TRUE)
+colnames(cosmo_subphylum_chisq)<-c("Subphylum", "Expected", "Observed")
+cosmo_subphylum_chisq$Expected<-cosmo_subphylum_chisq$Expected/(sum(cosmo_subphylum_chisq$Expected))
+cosmo_subphylum_chisq$Observed[4]<-0
+cosmo_subphylum_chisq_mat<-as.matrix(cosmo_subphylum_chisq[c(1:3),c(2:3)])
+chisq.test(cosmo_subphylum_chisq_mat)
+#Nonsignificant - X-squared = 0.0050239, df = 2, p-value = 0.9975
+chisq.posthoc.test(x=cosmo_subphylum_chisq_mat)
+
+#chisq cosmo substrate
+tbl_all_set<-data.frame(table(unique(raw_WY_dataframe[c(22,29,10)])$Specific))
+tbl_cosmos<-data.frame(table(unique(cosmodf[c(21,29,11)])$Specific))
+cosmo_substr_chisq<-merge(tbl_all_set, tbl_cosmos, by="Var1", all=TRUE)
+colnames(cosmo_substr_chisq)<-c("Substrate", "Expected", "Observed")
+cosmo_substr_chisq[is.na(cosmo_substr_chisq)]<-0
+cosmo_substr_chisq$Expected<-cosmo_substr_chisq$Expected/(sum(cosmo_substr_chisq$Expected))
+cosmo_substr_chisq_mat<-as.matrix(cosmo_substr_chisq[c(2:3)])
+chisq.test(cosmo_substr_chisq_mat)
+#Nonsignificant - X-squared = 3.2084, df = 39, p-value = 1
+chisq.posthoc.test(x=cosmo_substr_chisq_mat)
+
+write.table(cosmodf, "~/SurveyPaper/data/Cosmopolitan_z=3.tsv", sep="\t", quote=FALSE)
+toplot<-unique(cosmodf[c(29,30,31)])
+a<-ggplot(toplot, aes(x=Subphylum))+
+  geom_bar()+
+  ylab("No.")+
+  xlab("")+
+  ylim(0, 40)+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
+  ggtitle("Cosmopolitan\nby subphylum")
+
+toplot<-unique(cosmodf[c(21,29,11)])
+b<-ggplot(toplot, aes(x=Specific))+
+  geom_bar()+
+  ylab("No.")+
+  xlab("")+
+  ylim(0, 40)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  ggtitle("Cosmopolitan by substrate")
+
+#run mapping script lines 7:28
+cosmo_us<-cosmodf#[which(!is.na(singletons_df$State)),]
+p0 <- ggplot(data = us_states,
+             mapping = aes(x = long, y = lat,
+                           group = group, fill = Clim.Region))
+p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
+  scale_fill_manual(values = color_key$col)+
+  theme_bw()+
+  geom_jitter(data=cosmo_us, aes(x=Long, y=Lat), 
+              inherit.aes = FALSE, width=.5, shape=1)+ 
+  theme(legend.position = "none")+
+  ggtitle("Cosmopolitan isolation locations")+
+coord_equal()
+
+ggarrange(b, a, p1, widths=c(2,1))
+quartz.save("~/SurveyPaper/Figures/Cosmopolitan_descriptive_figure.pdf", type="pdf")
+
+
+
 #phylum descriptive figures
 phytbl<-unique(raw_WY_dataframe[c(22,29,30)])
 phyls<-data.frame(table(phytbl$Subphylum))
@@ -49,6 +206,7 @@ a<-ggplot(phyls, aes(x=Var1, y=Freq))+
   ylab("No.")+
   xlab("")+
   geom_text(aes(label = Freq), vjust = -0.5)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
   ggtitle("subphylum representation accross\n1520 unique isolations")
 
 phyls_div<-unique(phytbl[c(2,3)])
@@ -60,9 +218,10 @@ b<-ggplot(phyls_div1, aes(x=Var1, y=Freq))+
   ylab("No.")+
   xlab("")+
   geom_text(aes(label = Freq), vjust = -0.5)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
   ggtitle("unique species isolated\nin each subphylum", )
 
-phyls_temps<-unique(raw_WY_data[c(22,29,30,23)])
+phyls_temps<-unique(raw_WY_dataframe[c(22,29,30,23)])
 phyls_temps<-phyls_temps[which(!phyls_temps$IsoTemp=="Unknown"),]
 phyls_temps$IsoTemp<-as.factor(phyls_temps$IsoTemp)
 phyls_temps$IsoTemp = factor(phyls_temps$IsoTemp,levels(phyls_temps$IsoTemp)[c(4,1,2,3)])
@@ -73,7 +232,6 @@ c<-ggplot(phyls_temps, aes(x=IsoTemp, fill=Subphylum))+
 
 ggarrange(a,b,c, nrow=2, ncol = 2)
 
-quartz.save("~/SurveyPaper/Subphylum_descriptive_figure.pdf", type="pdf")
 ####### Association test 1 - plant genus - yeast spp. associations
 #adding a step to retain only unique SetIDs
 plant_genus_WY_dataframe<-unique(raw_WY_dataframe[c(15,22,29)])
