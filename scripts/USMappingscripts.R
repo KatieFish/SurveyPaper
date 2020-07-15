@@ -26,7 +26,7 @@ color_key<-color_key[order(color_key$Clim.Region),]
 
 us_states<-read.delim("~/SurveyPaper/data/tables_for_scripts/state_coord_for_mapping.tsv",
                       header=TRUE, stringsAsFactors=FALSE)
-raw_WY_dataframe<-read.csv("~/SurveyPaper/data/WY_df_2018-02-08.csv",
+raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
                            header=TRUE, stringsAsFactors=FALSE,
                            strip.white=TRUE)
 regions_by_sp<-read.delim("~/SurveyPaper/data/tables_for_scripts/regions_by_sp.tsv",
@@ -60,7 +60,7 @@ plot(tree, tip.color = tips2$col,
 p2<-recordPlot()
 
 #STEP 3 - CHANGE THE NAME OF THE FIGURE
-pdf("~/SurveyPaper/data/Geographical_analysis/Intra_species/Torulaspora_delbrueckii.pdf", height=20, width=6)
+pdf("~/SurveyPaper/data/Geographical_analysis/Intra_species/Torulaspora_delbrueckii.pdf", height=20, width=8)
 plot_grid(p2, p1,
           nrow = 2, rel_heights = c(2, 1))
 dev.off()
