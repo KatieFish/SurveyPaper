@@ -4,7 +4,8 @@
 
 require(ggplot2)
 require(ggpubr)
-require(chisq.posthoc.test)
+require()
+
 
 #Read in the dataframe and convert blank cells to NA
 raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
@@ -41,24 +42,6 @@ b<-ggplot(set_isolates, aes(Freq))+
 ggarrange(a, b, nrow=2)
 quartz.save("~/SurveyPaper/Isolate_isolations_hist.pdf", type="pdf")
 
-#singleton descriptive figure/table
-
-#chisq for proportions amongst subphyla
-tbl_all_set<-data.frame(table(unique(raw_WY_dataframe[c(22,29,30)])$Subphylum))
-tbl_singletons<-data.frame(table(unique(singletons_df[c(22,29,30)])$Subphylum))
-singleton_subphylum_chisq<-merge(tbl_all_set, tbl_singletons, by="Var1", all=TRUE)
-colnames(singleton_subphylum_chisq)<-c("Subphylum", "Expected", "Observed")
-singleton_subphylum_chisq$Expected<-singleton_subphylum_chisq$Expected/(sum(singleton_subphylum_chisq$Expected))
-singleton_subphylum_chisq$Observed[4]<-0
-singleton_subphylum_chisq_mat<-as.matrix(singleton_subphylum_chisq[c(1:3),c(2:3)])
-chisq.test(singleton_subphylum_chisq_mat)
-#Nonsignificant - p=.918
-#                 df =2
-#                 x2=0.17114
-chisq.posthoc.test(x=singleton_subphylum_chisq_mat)
-
-
-
 singletons<-as.character(set_isolates[which(set_isolates$Freq==1),1])
 singletons_df<-raw_WY_dataframe[which(raw_WY_dataframe$Species %in% singletons),]
 write.table(singletons_df, "~/SurveyPaper/data/Singletons.tsv", sep="\t", quote=FALSE)
@@ -72,20 +55,6 @@ a<-ggplot(toplot, aes(x=Subphylum))+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
   ggtitle("Singletons\nby subphylum")
-
-#chisq singleton substrate
-tbl_all_set<-data.frame(table(unique(raw_WY_dataframe[c(22,29,10)])$Specific))
-tbl_singletons<-data.frame(table(unique(singletons_df[c(22,29,10)])$Specific))
-singleton_substr_chisq<-merge(tbl_all_set, tbl_singletons, by="Var1", all=TRUE)
-colnames(singleton_substr_chisq)<-c("Substrate", "Expected", "Observed")
-singleton_substr_chisq[is.na(singleton_substr_chisq)]<-0
-singleton_substr_chisq$Expected<-singleton_substr_chisq$Expected/(sum(singleton_substr_chisq$Expected))
-singleton_substr_chisq_mat<-as.matrix(singleton_substr_chisq[c(2:3)])
-chisq.test(singleton_substr_chisq_mat)
-#Nonsignificant - X-squared = 5.2249, df = 39, p-value = 1
-fisher.test(singleton_substr_chisq_mat)
-#Nonsignificant p=1
-chisq.posthoc.test(x=singleton_substr_chisq_mat)
 
 toplot<-unique(singletons_df[c(22,29,10)])
 b<-ggplot(toplot, aes(x=Specific))+
@@ -130,30 +99,6 @@ repeats<-which(duplicated(tbl$Var1))
 cosmo_sp<-as.character(tbl$Var1[repeats])
 cosmodf<-cosmodf[which(cosmodf$Species %in% cosmo_sp),]
 
-#chisq for proportions amongst subphyla
-tbl_all_set<-data.frame(table(unique(raw_WY_dataframe[c(22,29,30)])$Subphylum))
-tbl_cosmos<-data.frame(table(unique(cosmodf[c(22,29,30)])$Subphylum))
-cosmo_subphylum_chisq<-merge(tbl_all_set, tbl_cosmos, by="Var1", all=TRUE)
-colnames(cosmo_subphylum_chisq)<-c("Subphylum", "Expected", "Observed")
-cosmo_subphylum_chisq$Expected<-cosmo_subphylum_chisq$Expected/(sum(cosmo_subphylum_chisq$Expected))
-cosmo_subphylum_chisq$Observed[4]<-0
-cosmo_subphylum_chisq_mat<-as.matrix(cosmo_subphylum_chisq[c(1:3),c(2:3)])
-chisq.test(cosmo_subphylum_chisq_mat)
-#Nonsignificant - X-squared = 0.0050239, df = 2, p-value = 0.9975
-chisq.posthoc.test(x=cosmo_subphylum_chisq_mat)
-
-#chisq cosmo substrate
-tbl_all_set<-data.frame(table(unique(raw_WY_dataframe[c(22,29,10)])$Specific))
-tbl_cosmos<-data.frame(table(unique(cosmodf[c(21,29,11)])$Specific))
-cosmo_substr_chisq<-merge(tbl_all_set, tbl_cosmos, by="Var1", all=TRUE)
-colnames(cosmo_substr_chisq)<-c("Substrate", "Expected", "Observed")
-cosmo_substr_chisq[is.na(cosmo_substr_chisq)]<-0
-cosmo_substr_chisq$Expected<-cosmo_substr_chisq$Expected/(sum(cosmo_substr_chisq$Expected))
-cosmo_substr_chisq_mat<-as.matrix(cosmo_substr_chisq[c(2:3)])
-chisq.test(cosmo_substr_chisq_mat)
-#Nonsignificant - X-squared = 3.2084, df = 39, p-value = 1
-chisq.posthoc.test(x=cosmo_substr_chisq_mat)
-
 write.table(cosmodf, "~/SurveyPaper/data/Cosmopolitan_z=3.tsv", sep="\t", quote=FALSE)
 toplot<-unique(cosmodf[c(29,30,31)])
 a<-ggplot(toplot, aes(x=Subphylum))+
@@ -171,10 +116,10 @@ b<-ggplot(toplot, aes(x=Specific))+
   geom_bar()+
   ylab("No.")+
   xlab("")+
-  ylim(0, 40)+
+  ylim(0, 400)+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
-  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5, size=2)+
   ggtitle("Cosmopolitan by substrate")
 
 #run mapping script lines 7:28
