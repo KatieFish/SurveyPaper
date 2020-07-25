@@ -2,7 +2,7 @@
 ###################################################
 
 #STEP 1 - set the species (spell it right)
-species<-"Saccharomyces eubayanus"
+species<-"Teunomyces carpophila"
 
 require(tidyr)
 require(ape)
@@ -32,7 +32,7 @@ raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
 regions_by_sp<-read.delim("~/SurveyPaper/data/tables_for_scripts/regions_by_sp.tsv",
                           stringsAsFactors=FALSE, header=TRUE)
 
-spp_of_interest<-raw_WY_dataframe[which(raw_WY_dataframe$Species_Old==species),]
+spp_of_interest<-raw_WY_dataframe[which(raw_WY_dataframe$Species==species),]
 
 p0 <- ggplot(data = us_states,
              mapping = aes(x = long, y = lat,
@@ -64,3 +64,22 @@ pdf("~/SurveyPaper/data/Geographical_analysis/Intra_species/Torulaspora_delbruec
 plot_grid(p2, p1,
           nrow = 2, rel_heights = c(2, 1))
 dev.off()
+
+
+
+#######script below plots the number of all independent isolations on the map
+TotalsByState<-read.delim("~/SurveyPaper/data/tables_for_scripts/Number_ind_isolations_by_region.tsv")
+
+p0 <- ggplot(data = us_states,
+             mapping = aes(x = long, y = lat,
+                           group = group, fill = Clim.Region))
+p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
+  scale_fill_manual(values = color_key$col)+
+  theme_bw()+
+  geom_text(data=TotalsByState, aes(x=LongCenter, y=LatCenter, label=No..independent.isolations, fontface=2), 
+            inherit.aes = FALSE, size=3)+ 
+  geom_text(data=TotalsByState, aes(x=LongCenter, y=LatCenter, label=No..unique.species, fontface=3),
+            nudge_y=-1.5, inherit.aes=FALSE, size=2)+
+  coord_equal()
+
+quartz.save("~/SurveyPaper/Figures/Map_of_all_isolates_USA.pdf", type="pdf")

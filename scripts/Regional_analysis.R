@@ -1,6 +1,6 @@
 raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
                            header=TRUE, stringsAsFactors=FALSE,
-                           strip.white=TRUE)
+                           strip.white=TRUE, na.strings=c("","NA"))
 
 Species_by_location_DF<-raw_WY_dataframe[c(1,25,29)]
 Species_by_location_DF<-Species_by_location_DF[which(!is.na(Species_by_location_DF$State)),]
@@ -105,3 +105,4 @@ spp_for_regional_analysis<-spp_for_regional_analysis[order(
 
 write.table(spp_for_regional_analysis, "~/SurveyPaper/data/tables_for_scripts/Species_and_ITS_seq_for_regional_analyses.tsv",
             sep="\t", quote=FALSE, row.names=FALSE)
+

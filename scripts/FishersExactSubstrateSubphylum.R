@@ -57,7 +57,7 @@ for(i in 1:nrow(substrate_Fisher_df)){
     mat<-as.matrix(data.frame(substr, NOTsubstr))
     if(j==2){
     substrate_Fisher_df$SingletonEnrichment[i]<-as.numeric(fisher.test(mat, alternative="greater")$p.value)
-    }else if(j==4){
+    } else if (j==4){
       substrate_Fisher_df$CosmopolitanEnrichment[i]<-as.numeric(fisher.test(mat, alternative="greater")$p.value)
     }
   } 
@@ -70,7 +70,7 @@ length(which(substrate_Fisher_df$SingletonEnrichmentBHadj<0.05))
 # 0 significant enrichment for singletons in substrates
 length(which(substrate_Fisher_df$CosmopolitanEnrichmentBHadj<0.05))
 # 1 significant enrichment for cosmopolitan spp.
-# Soil enriched for cosmopolitan spp. (padj=0.01)
+# cosmopolitan spp. are enriched for soil associations (padj=0.01)
 
 write.table(substrate_Fisher_df, "~/SurveyPaper/data/Singleton_Cosmo_substrate_enrichment_pvals.tsv",
             sep="\t", quote=FALSE, row.names=FALSE)
