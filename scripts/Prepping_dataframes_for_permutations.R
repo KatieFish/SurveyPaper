@@ -175,7 +175,8 @@ c<-ggplot(phyls_temps, aes(x=IsoTemp, fill=Subphylum))+
   ylab("No.")+
   theme_bw()
 
-ggarrange(a,b,c, nrow=2, ncol = 2)
+ggarrange(c,a,b, nrow=3, ncol =1)
+quartz.save("~/SurveyPaper/Figures/Descriptive_figure_for_raw_data_fed_into_permutations.pdf", type="pdf")
 
 ####### Association test 1 - plant genus - yeast spp. associations
 #adding a step to retain only unique SetIDs
@@ -188,6 +189,35 @@ plant_genus_WY_dataframe<-plant_genus_WY_dataframe[which(!is.na(plant_genus_WY_d
 #
 plant_genus_WY_dataframe<-plant_genus_WY_dataframe[which(!plant_genus_WY_dataframe$Plant.Genus=="Unknown"), ]
 #returns just part of dataframe where Plant.Genus does NOT equal Uknown
+plant_genus_WY_dataframe<-plant_genus_WY_dataframe[which(!plant_genus_WY_dataframe$Plant.Genus=="Uknown"), ]
+
+####
+#descriptive figure of plant genus distribution
+plant_genus_WY_dataframe<-unique(raw_WY_dataframe[c(15,22,29,10)])
+plant_genus_WY_dataframe<-plant_genus_WY_dataframe[which(!is.na(plant_genus_WY_dataframe$Plant.Genus)), ]
+plant_genus_WY_dataframe<-plant_genus_WY_dataframe[which(!plant_genus_WY_dataframe$Plant.Genus=="Unknown"), ]
+plant_genus_WY_dataframe<-plant_genus_WY_dataframe[which(!plant_genus_WY_dataframe$Plant.Genus=="Uknown"), ]
+toplot<-data.frame(table(plant_genus_WY_dataframe$Plant.Genus))
+toplot<-toplot[order(toplot$Freq, decreasing = TRUE),]
+toplot$order<-c(1:nrow(toplot))
+colnames(toplot)<-c("Plant.Genus", "count", "order")
+plant_genus_WY_dataframe<-merge(toplot, plant_genus_WY_dataframe, by="Plant.Genus")
+plant_genus_WY_dataframe$Plant.Genus<-reorder(plant_genus_WY_dataframe$Plant.Genus, plant_genus_WY_dataframe$order)
+colnames(plant_genus_WY_dataframe)[6]<-"Substrate.category"
+S_subsB<-ggplot(plant_genus_WY_dataframe, aes(x=Plant.Genus, fill=Substrate.category))+
+  geom_bar()+
+  theme_bw()+
+  ylim(0, 200)+
+  xlab("")+
+  ylab("No.")+
+  geom_text(data=toplot, aes(x=Plant.Genus, y=count, label = count), inherit.aes = FALSE, vjust = -0.5, size=2)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
+  theme(legend.key.size = unit(0.075, "cm"), legend.key.width = unit(.10, "cm"),
+        legend.text=element_text(size=5))
+
+ggarrange(nrow = 2, S_subsA, S_subsB)
+quartz.save("~/SurveyPaper/Figures/Descriptive_fig_of_substr_plantgenus_categories.pdf", type="pdf")
+
 #descriptive figure
 plants<-length(unique(plant_genus_WY_dataframe$Plant.Genus))
 yeast<-length(unique(plant_genus_WY_dataframe$Species))
@@ -256,6 +286,22 @@ Substrate_specific_WY_dataframe<-unique(raw_WY_dataframe[c(22,10,29)])
 
 #
 Substrate_specific_WY_dataframe<-Substrate_specific_WY_dataframe[which(!is.na(Substrate_specific_WY_dataframe$Specific)),]
+
+#descriptive figure about substrate variable distribution
+toplot<-data.frame(table(Substrate_specific_WY_dataframe$Specific))
+toplot<-toplot[order(toplot$Freq, decreasing = TRUE),]
+toplot$order<-c(1:nrow(toplot))
+toplot$Var1<-reorder(toplot$Var1, toplot$order)
+S_subsA<-ggplot(toplot, aes(x=Var1, y=Freq))+
+  geom_col()+
+  theme_bw()+
+  ylim(0, 550)+
+  xlab("")+
+  ylab("No.")+
+  geom_text(aes(label = Freq), vjust = -0.5, size=2)+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+quartz.save("~/SurveyPaper/Figures/Substrate_specific_category_descriptive_fig.pdf", type="pdf")  
+
 
 
 #descriptive figure

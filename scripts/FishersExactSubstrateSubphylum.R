@@ -131,3 +131,82 @@ length(which(subphylum_Fisher_df$CosmopolitanEnrichmentBHadj<0.05))
 
 write.table(subphylum_Fisher_df, "~/SurveyPaper/data/Singleton_Cosmo_subphylum_enrichment_pvals.tsv",
             sep="\t", quote=FALSE, row.names=FALSE)
+
+
+
+##FISHER LOOP for SUBSTRATE SUBPHYLUM
+#for each substrate, 4 matrices are indpendently tested:
+# ########### substrate # Not substrate
+#Subphylum             #
+########################################
+#Nonsubphlum           #
+
+raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
+                             header=TRUE, stringsAsFactors=FALSE,
+                             na.strings=c("","NA"),
+                             strip.white=TRUE)
+
+Pezizos<-raw_WY_dataframe[which(raw_WY_dataframe$Subphylum=="Pezizomycotina"), ]
+NONPezizos<-raw_WY_dataframe[which(!raw_WY_dataframe$Subphylum=="Pezizomycotina"), ]
+Basidios<-raw_WY_dataframe[which(raw_WY_dataframe$Subphylum=="Basidiomycota"), ]
+NONBasidios<-raw_WY_dataframe[which(!raw_WY_dataframe$Subphylum=="Basidiomycota"), ]
+Saccharos<-raw_WY_dataframe[which(raw_WY_dataframe$Subphylum=="Saccharomycotina"), ]
+NONSaccharos<-raw_WY_dataframe[which(!raw_WY_dataframe$Subphylum=="Saccharomycotina"), ]
+Taprinos<-raw_WY_dataframe[which(raw_WY_dataframe$Subphylum=="Taphrinomycotina"), ]
+NONTaphrinos<-raw_WY_dataframe[which(!raw_WY_dataframe$Subphylum=="Taphrinomycotina"), ]
+
+tbl<-data.frame(table(unique(NONBasidios[c(22,29,10)])$Specific))
+colnames(tbl)<-c("Specific", "NonBasidioObs")
+tbl1<-data.frame(table(unique(Basidios[c(22,29,10)])$Specific))
+colnames(tbl1)<-c("Specific", "BasidioObs")
+tbl2<-data.frame(table(unique(NONPezizos[c(22,29,10)])$Specific))
+colnames(tbl2)<-c("Specific", "NonPezizoObs")
+tbl3<-data.frame(table(unique(Pezizos[c(22,29,10)])$Specific))
+colnames(tbl3)<-c("Specific", "PezizoObs")
+tbl4<-data.frame(table(unique(NONSaccharos[c(22,29,10)])$Specific))
+colnames(tbl4)<-c("Specific", "NonSaccharosObs")
+tbl5<-data.frame(table(unique(Saccharos[c(22,29,10)])$Specific))
+colnames(tbl5)<-c("Specific", "SaccharoObs")
+tbl6<-data.frame(table(unique(NONTaphrinos[c(22,29,10)])$Specific))
+colnames(tbl6)<-c("Specific", "NonTaphrinoObs")
+tbl7<-data.frame(table(unique(Taprinos[c(22,29,10)])$Specific))
+colnames(tbl7)<-c("Specific", "TaphrinoObs")
+
+substrate_Fisher_df<-merge(tbl, tbl1, by="Specific", all=TRUE)
+substrate_Fisher_df<-merge(substrate_Fisher_df, tbl2, by="Specific", all=TRUE)
+substrate_Fisher_df<-merge(substrate_Fisher_df, tbl3, by="Specific", all=TRUE)
+substrate_Fisher_df<-merge(substrate_Fisher_df, tbl4, by="Specific", all=TRUE)
+substrate_Fisher_df<-merge(substrate_Fisher_df, tbl5, by="Specific", all=TRUE)
+substrate_Fisher_df<-merge(substrate_Fisher_df, tbl6, by="Specific", all=TRUE)
+substrate_Fisher_df<-merge(substrate_Fisher_df, tbl7, by="Specific", all=TRUE)
+substrate_Fisher_df[is.na(substrate_Fisher_df)]<-0
+
+substrate_Fisher_df$BasidioEnrichment<-NA
+substrate_Fisher_df$PezizoEnrichment<-NA
+substrate_Fisher_df$SaccharoEnrichment<-NA
+substrate_Fisher_df$TaphrinoEnrichment<-NA
+
+for(i in 1:nrow(substrate_Fisher_df)){
+  for (j in c(2,4,6,8)){
+    substr<-c(substrate_Fisher_df[i, (j+1)], substrate_Fisher_df[i, j])
+    NOTsubstr<-c(sum(substrate_Fisher_df[j+1]), sum(substrate_Fisher_df[,j]))-substr
+    mat<-as.matrix(data.frame(substr, NOTsubstr))
+    if(j==2){
+      substrate_Fisher_df$BasidioEnrichment[i]<-as.numeric(fisher.test(mat, alternative = "greater")$p.value)
+    }else if(j==4){
+      substrate_Fisher_df$PezizoEnrichment[i]<-as.numeric(fisher.test(mat, alternative = "greater")$p.value)
+    }else if(j==6){
+      substrate_Fisher_df$SaccharoEnrichment[i]<-as.numeric(fisher.test(mat, alternative = "greater")$p.value)
+    }else if(j==8){
+      substrate_Fisher_df$TaphrinoEnrichment[i]<-as.numeric(fisher.test(mat, alternative = "greater")$p.value)
+    }
+  } 
+}
+
+substrate_Fisher_df$BH_BasidioEnrichment<-p.adjust(substrate_Fisher_df$BasidioEnrichment, method = "BH")
+substrate_Fisher_df$BH_PezizoEnrichment<-p.adjust(substrate_Fisher_df$PezizoEnrichment, method = "BH")
+substrate_Fisher_df$BH_SaccharoEnrichment<-p.adjust(substrate_Fisher_df$SaccharoEnrichment, method = "BH")
+substrate_Fisher_df$BH_TaphrinoEnrichment<-p.adjust(substrate_Fisher_df$TaphrinoEnrichment, method = "BH")
+
+
+write.table(substrate_Fisher_df, "~/SurveyPaper/data/Subphylum_x_substrate_FishersExact.tsv", sep="\t", quote=FALSE, row.names=FALSE)
