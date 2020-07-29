@@ -1,4 +1,4 @@
-raw_WY_dataframe<-read.csv("~/SurveyPaper/data/WY_df_2018-02-08.csv",
+raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
                            header=TRUE, stringsAsFactors=FALSE,
                            na.strings=c("","NA"),
                            strip.white=TRUE)
@@ -38,6 +38,29 @@ axis(side=1, at=c(1:nrow(Menhinicks_D)), labels = row.names(Menhinicks_D), las=2
 ###Species Diversity using Shannon-Weiner###
 require(vegan)
 Shannon_Wiener_H<-data.frame(diversity(Diversity_matrix, index="shannon"))
-plot(Shannon_Wiener_H[,1], xaxt='n', ylab="Shannon-Wiener (H')", 
-     main="Species Diversity by Substrate", xlab=NA, cex=.5, pch=16)
-axis(side=1, at=c(1:nrow(Shannon_Wiener_H)),labels=row.names(Shannon_Wiener_H), las=2)
+Shannon_Wiener_H$Specific<-row.names(Shannon_Wiener_H)
+Shannon_Wiener_H<-Shannon_Wiener_H[order(Shannon_Wiener_H$diversity.Diversity_matrix..index....shannon..), ]
+par(mar=c(10,5,2,5))
+plot(Shannon_Wiener_H[,2], xaxt='n', ylab="Shannon-Wiener (H')", 
+     main=NA, xlab=NA, cex=1, pch=16)
+axis(side=1, at=c(1:nrow(Shannon_Wiener_H)),labels=Shannon_Wiener_H[,1], cex.axis=.65, las=2)
+par(new=T)
+plot(Shannon_Wiener_H[,3], xaxt='n', ylab=NA, xlab=NA, pch=1, cex=1,
+     yaxt='n')
+axis(side=4, at=seq(50, 500, 50), labels=seq(50, 500, 50))
+mtext("Sampling density", side=4,cex.lab=1, line=2.5)
+legend("topleft", legend=c("H'", "sampling density"), pch=c(16, 1))
+quartz.save("~/SurveyPaper/Figures/Shannon_weiner_by_substrate.pdf", type="pdf")
+
+###Checking to make sure SW index does not correllate with sampling
+substrate_sampling<-data.frame(table(Diversity_df$Specific))
+colnames(substrate_sampling)[1]<-"Specific"
+Shannon_Wiener_H<-merge(Shannon_Wiener_H, substrate_sampling, by="Specific")
+
+summary(lm(Shannon_Wiener_H$diversity.Diversity_matrix..index....shannon.. ~
+           Shannon_Wiener_H$Freq))
+
+
+ggplot(Shannon_Wiener_H, aes(x=Freq, y=diversity.Diversity_matrix..index....shannon..)) +
+  geom_point(shape=1) +   
+  geom_smooth(method=lm) 

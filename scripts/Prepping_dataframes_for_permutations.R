@@ -22,8 +22,7 @@ length(which(individual_isolates$Freq>50))
 a<-ggplot(individual_isolates, aes(Freq))+
   geom_histogram()+
   theme_bw()+
-  ggtitle("262 unique species accross 1964 isolates", 
-          subtitle = "104 singletons and 8 spp. isolated >50x")+
+  ggtitle("262 unique OTUs accross 1962 isolates")+
   xlab("No. times isolated")
 
 
@@ -35,12 +34,12 @@ length(which(set_isolates$Freq>50))
 b<-ggplot(set_isolates, aes(Freq))+
   geom_histogram()+
   theme_bw()+
-  ggtitle("262 unique species accross 1520 unique isolations", 
-          subtitle = "116 singletons and 6 spp. isolated >50x")+
+  ggtitle("262 unique OTUs accross 1518 unique isolations", 
+          subtitle = "116 singletons and 6 OTUs isolated >50x")+
   xlab("No. times isolated from independent isolations")
 
 ggarrange(a, b, nrow=2)
-quartz.save("~/SurveyPaper/Isolate_isolations_hist.pdf", type="pdf")
+quartz.save("~/SurveyPaper/Figures/Isolate_isolations_hist.pdf", type="pdf")
 
 singletons<-as.character(set_isolates[which(set_isolates$Freq==1),1])
 singletons_df<-raw_WY_dataframe[which(raw_WY_dataframe$Species %in% singletons),]
@@ -144,27 +143,24 @@ quartz.save("~/SurveyPaper/Figures/Cosmopolitan_descriptive_figure.pdf", type="p
 #phylum descriptive figures
 phytbl<-unique(raw_WY_dataframe[c(22,29,30)])
 phyls<-data.frame(table(phytbl$Subphylum))
-a<-ggplot(phyls, aes(x=Var1, y=Freq))+
-  geom_col()+
+colnames(phyls)[2]<-"Unique.isolates"
+phyls_div<-unique(phytbl[c(2,3)])
+phyls_div1<-data.frame(table(phyls_div$Subphylum))
+colnames(phyls_div1)[2]<-"Unique.OTUs"
+phyls_div1<-merge(phyls_div1, phyls, by="Var1")
+b<-ggplot(phyls_div1, aes(x=Var1, y=Unique.isolates))+
+  geom_col(fill="grey90")+
+  geom_text(aes(label = Unique.isolates ), vjust = -2, size=2.5)+
+  geom_col(aes(x=Var1, y=Unique.OTUs), fill="grey43")+
+  geom_text(aes(x=Var1, y=Unique.OTUs, label=Unique.OTUs), vjust=-0.5, size=2.5)+
   theme_bw()+
   ylim(0, 1200)+
   ylab("No.")+
   xlab("")+
-  geom_text(aes(label = Freq), vjust = -0.5)+
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
-  ggtitle("subphylum representation accross\n1520 unique isolations")
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 
-phyls_div<-unique(phytbl[c(2,3)])
-phyls_div1<-data.frame(table(phyls_div$Subphylum))
-b<-ggplot(phyls_div1, aes(x=Var1, y=Freq))+
-  geom_col()+
-  theme_bw()+
-  ylim(0, 200)+
-  ylab("No.")+
-  xlab("")+
-  geom_text(aes(label = Freq), vjust = -0.5)+
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
-  ggtitle("unique species isolated\nin each subphylum", )
+quartz.save("~/SurveyPaper/Figures/Subphylum_descriptive_figure.pdf", type="pdf")
+
 
 phyls_temps<-unique(raw_WY_dataframe[c(22,29,30,23)])
 phyls_temps<-phyls_temps[which(!phyls_temps$IsoTemp=="Unknown"),]
@@ -175,8 +171,8 @@ c<-ggplot(phyls_temps, aes(x=IsoTemp, fill=Subphylum))+
   ylab("No.")+
   theme_bw()
 
-ggarrange(c,a,b, nrow=3, ncol =1)
-quartz.save("~/SurveyPaper/Figures/Descriptive_figure_for_raw_data_fed_into_permutations.pdf", type="pdf")
+quartz.save("~/SurveyPaper/Figures/Temperature_by_subphylum.pdf", type="pdf")
+
 
 ####### Association test 1 - plant genus - yeast spp. associations
 #adding a step to retain only unique SetIDs
@@ -250,7 +246,7 @@ rm(plants, yeast, pairs, comb)
 
 ####### Association test 1 - isolation temperature - yeast spp. associations
 #adding a step to retain only unique SetIDs
-iso_temp_WY_dataframe<-unique(raw_WY_dataframe[c(22,23,29)])
+iso_temp_WY_dataframe<-unique(raw_WY_dataframe[c(22,23,29,30)])
 
 #
 iso_temp_WY_dataframe<-iso_temp_WY_dataframe[which(!iso_temp_WY_dataframe$IsoTemp=="Unknown"), ]
@@ -330,8 +326,8 @@ rm(substr, yeast, pairs, comb)
  #           quote=FALSE, row.names=FALSE)
 
 
-ggarrange(a, b, c, ncol=1)
-quartz.save("~/SurveyPaper/Descriptive_figure_for_raw_data_fed_into_permutations.pdf", type="pdf")
+ggarrange(c, a, b, ncol=1)
+quartz.save("~/SurveyPaper/Figures/Descriptive_figure_for_raw_data_fed_into_permutations.pdf", type="pdf")
 
 
 

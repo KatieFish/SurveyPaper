@@ -2,7 +2,7 @@
 
 
 #IDing possible "Endemic spp" as those isolated z or more independent times from the same region
-z<-3
+z<-5
 
 
 ind_iso_sp_by_state<-unique(raw_WY_dataframe[c(22, 29, 25)])

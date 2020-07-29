@@ -46,7 +46,7 @@ ggplot(spp_accross_multiple_regions_2plus, aes(No.Regions))+
   ggtitle("Number of regions yeast spp. isolated\n at least twice in a region are isolated from")
 quartz.save("~/SurveyPaper/data/Geographical_analysis/Histogram_of_spp_w/greaterthan2isolatesperregion_by_number_of_regions.pdf", type="pdf")
 
-#52 spp. with potential analysis
+#54 spp. with potential analysis
 
 spp_for_regional_analysis<-spp_accross_multiple_regions_2plus[which(spp_accross_multiple_regions_2plus$No.Regions>1),]
 
