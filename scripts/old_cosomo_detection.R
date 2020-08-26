@@ -31,7 +31,7 @@ colnames(cosmo_result_mat)<-rgns
 row.names(cosmo_result_mat)<-isos
 
 for(i in 1:nrow(cosmo_result_mat)){
-  n<-as.numeric(row.names(cosmo_result_df)[i])
+  n<-as.numeric(row.names(cosmo_result_mat)[i])
   n_or_more<-as.character(set_isolates$Var1[
     which(set_isolates$Freq>=n)])
   n_or_more_df<-raw_WY_dataframe[which(raw_WY_dataframe$Species %in% n_or_more),]
@@ -111,7 +111,7 @@ colnames(cosmo_result_mat)<-rgns
 row.names(cosmo_result_mat)<-isos
 
 for(i in 1:nrow(cosmo_result_mat)){
-  n<-as.numeric(row.names(cosmo_result_df)[i])
+  n<-as.numeric(row.names(cosmo_result_mat)[i])
   n_or_more<-as.character(set_isolates$Var1[
     which(set_isolates$Freq>=n)])
   n_or_more_df<-raw_WY_dataframe[which(raw_WY_dataframe$Species %in% n_or_more),]
@@ -159,32 +159,5 @@ require(ggpubr)
 ggarrange(nrow=2, ncol=2, a, c, b, d)
 ####
 
-##APPROACH 2 - distribute and z-transform sampling in each region independently,
-#find yeasts that > 2 std deviations from the mean (z>=2)
-
-##paused 08-04 - needs some more thought. 
-
-raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
-                             header=TRUE, stringsAsFactors=FALSE,
-                             na.strings=c("","NA"),
-                             strip.white=TRUE)
-
-regions<-read.delim("~/SurveyPaper/data/tables_for_scripts/NOAA_US_Climate_Regions.txt",
-                    header=TRUE, stringsAsFactors=FALSE)
-
-raw_WY_dataframe<-merge(raw_WY_dataframe, regions, by="State", all=TRUE)
-raw_WY_dataframe<-raw_WY_dataframe[which(!is.na(raw_WY_dataframe$StrainID)),]
-
-#Set up table of unique region X species combos
-set_isolate_regions<-data.frame(table(unique(raw_WY_dataframe[c(22,29,33)])[,c(2,3)]))
-set_isolate_regions<-set_isolate_regions[which(set_isolate_regions$Freq>0),]
-
-rgns<-as.character(unique(set_isolate_regions$Region))
-
-regional_cosmopolitan
-
-for(r in 1:length(region)){
-  obs_freqs<-set_isolate_regions$Freq[which(set_isolate_regions$Region==rgns[r])]
-  outliers<-length(boxplot.stats(obs_freqs)$out)
-}
+quartz.save("Cosmopolitan_by_isolation_and_region_parameter_figure.pdf", type="pdf")
 

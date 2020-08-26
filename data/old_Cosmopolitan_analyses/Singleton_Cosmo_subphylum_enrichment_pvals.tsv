@@ -1,0 +1,5 @@
+Subphylum	NonsingletonObs	SingletonObs	NoncosmopolitanObs	CosmopolitanObs	SingletonEnrichment	CosmopolitanEnrichment	SingletonEnrichmentBHadj	CosmopolitanEnrichmentBHadju
+Basidiomycota	398	49	174	272	0.00153426333545216	0.935483336189068	0.00306852667090432	1
+Pezizomycotina	35	12	36	11	0.000119011375917373	0.999999998181937	0.000476045503669492	1
+Saccharomycotina	965	55	334	682	0.999998562277534	7.37766777390673e-05	1	0.000295106710956269
+Taphrinomycotina	4	0	4	0	1	1	1	1

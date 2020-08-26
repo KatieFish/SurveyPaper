@@ -1,9 +1,6 @@
 
 ###################################################
 
-#STEP 1 - set the species (spell it right)
-species<-"Teunomyces carpophila"
-
 require(tidyr)
 require(ape)
 require(usmap)
@@ -11,75 +8,46 @@ require(ggplot2)
 require(maps)
 require(ggthemes)
 require(mapproj)
-require(cowplot)
-require("seqinr")
-require("ips")
 
+### DO NOT NEED TO RUN LINES 13:22 - JUST READ IN THE US STATES DF
+us_states<-usmap::us_map()
+us_states<-us_states[which(!us_states$full == "Hawaii"),]
+us_states$full[which(us_states$full=="District of Columbia")]<-"Maryland"
+regions<-read.delim("~/SurveyPaper/data/tables_for_scripts/NOAA_US_Climate_Regions.txt",
+          header=TRUE, stringsAsFactors=FALSE)
+colnames(us_states)[c(9,1,2)]<-c("State", "long", "lat")
+us_states<-merge(us_states, regions[c(2,3)], by="State", all=TRUE)
+us_states<-us_states[order(us_states$order),]
+write.table(us_states,"~/SurveyPaper/data/tables_for_scripts/state_coord_for_mapping.tsv",
+            sep="\t", quote=FALSE, row.names=FALSE)
+################
 
-### for map
 regional_color_key<-read.delim("~/SurveyPaper/data/Geographical_analysis/regional_color_key.tsv",
-                      stringsAsFactors=FALSE, header=TRUE)
+                               stringsAsFactors=FALSE, header=TRUE)
 color_key<-regional_color_key
 colnames(color_key)[1]="Clim.Region"
-color_key<-color_key[which(!color_key$Clim.Region=="Arctic"),]
-color_key<-color_key[order(color_key$Clim.Region),]
-
 us_states<-read.delim("~/SurveyPaper/data/tables_for_scripts/state_coord_for_mapping.tsv",
                       header=TRUE, stringsAsFactors=FALSE)
-raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
-                           header=TRUE, stringsAsFactors=FALSE,
-                           strip.white=TRUE)
-regions_by_sp<-read.delim("~/SurveyPaper/data/tables_for_scripts/regions_by_sp.tsv",
-                          stringsAsFactors=FALSE, header=TRUE)
-
-spp_of_interest<-raw_WY_dataframe[which(raw_WY_dataframe$Species==species),]
-
-p0 <- ggplot(data = us_states,
-             mapping = aes(x = long, y = lat,
-                           group = group, fill = Clim.Region))
-p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
-  scale_fill_manual(values = color_key$col)+
-  theme_bw()+
-  geom_jitter(data=spp_of_interest, aes(x=Long, y=Lat), 
-              inherit.aes = FALSE, width=.5, shape=1)+ 
-  coord_equal()
-
-####STEP 2 - SET THE TREE
-tree<-read.tree("/Users/katiefisher/SurveyPaper/data/Geographical_analysis/Intra_species/FASTA_files/trees/Saccharomyces_eubayanus-ML.tree")
-tips<-data.frame(tree$tip.label)
-tips<-tips %>% separate(tree.tip.label, c("Gen", "Sp", "StrainID"))
-tips$order<-c(1:nrow(tips))
-tips2<-merge(tips, regions_by_sp[c(2,4)], by="StrainID")
-tips2<-merge(tips2, regional_color_key, by="Region")
-tips2$col<-as.character(tips2$col)
-tips2<-tips2[order(tips2$order),]
-par(mar=c(.1,.1,.1,.1))
-plot(tree, tip.color = tips2$col,
-    use.edge.length = FALSE, edge.width=2
-     )
-p2<-recordPlot()
-
-#STEP 3 - CHANGE THE NAME OF THE FIGURE
-pdf("~/SurveyPaper/data/Geographical_analysis/Intra_species/Torulaspora_delbrueckii.pdf", height=20, width=8)
-plot_grid(p2, p1,
-          nrow = 2, rel_heights = c(2, 1))
-dev.off()
-
+regions<-read.delim("~/SurveyPaper/data/tables_for_scripts/NOAA_US_Climate_Regions.txt",
+                    header=TRUE, stringsAsFactors=FALSE)
 
 
 #######script below plots the number of all independent isolations on the map
 TotalsByState<-read.delim("~/SurveyPaper/data/tables_for_scripts/Number_ind_isolations_by_region.tsv")
+#adjust lat and long 
+temp<-usmap_transform(TotalsByState[c(6,5)])
+TotalsByState<-merge(TotalsByState, temp, by=c("LatCenter", "LongCenter"))
 
 p0 <- ggplot(data = us_states,
              mapping = aes(x = long, y = lat,
-                           group = group, fill = Clim.Region))
-p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
+                           group = group, fill = Region))
+ p0 + geom_polygon(color = "gray90", size = 0.1)+
   scale_fill_manual(values = color_key$col)+
   theme_bw()+
-  geom_text(data=TotalsByState, aes(x=LongCenter, y=LatCenter, label=No..independent.isolations, fontface=2), 
+  geom_text(data=TotalsByState, aes(x=LongCenter.1, y=LatCenter.1, label=No..independent.isolations, fontface=2), 
             inherit.aes = FALSE, size=3)+ 
-  geom_text(data=TotalsByState, aes(x=LongCenter, y=LatCenter, label=No..unique.species, fontface=3),
-            nudge_y=-1.5, inherit.aes=FALSE, size=2)+
+  geom_text(data=TotalsByState, aes(x=LongCenter.1, y=LatCenter.1, label=No..unique.species, fontface=3),
+            nudge_y=-100500, inherit.aes=FALSE, size=2)+
   coord_equal()
 
 quartz.save("~/SurveyPaper/Figures/Map_of_all_isolates_USA.pdf", type="pdf")

@@ -41,16 +41,20 @@ b<-ggplot(set_isolates, aes(Freq))+
 ggarrange(a, b, nrow=2)
 quartz.save("~/SurveyPaper/Figures/Isolate_isolations_hist.pdf", type="pdf")
 
-singletons<-as.character(set_isolates[which(set_isolates$Freq==1),1])
-singletons_df<-raw_WY_dataframe[which(raw_WY_dataframe$Species %in% singletons),]
-write.table(singletons_df, "~/SurveyPaper/data/Singletons.tsv", sep="\t", quote=FALSE)
+
+####Singleton descriptive figure
+singletons_df<-read.delim("~/SurveyPaper/data/Singletons.tsv", header=TRUE,
+                       stringsAsFactors=FALSE)
 toplot<-unique(singletons_df[c(29,30,31)])
+toplot$significant<-NA
+toplot$significant[3]<-"*"
 a<-ggplot(toplot, aes(x=Subphylum))+
   geom_bar()+
   ylab("No.")+
   xlab("")+
   ylim(0, 70)+
-  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5, size=2)+
+  geom_text(aes(y=65, label=significant), size=3)+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
   ggtitle("Singletons\nby subphylum")
@@ -63,80 +67,151 @@ b<-ggplot(toplot, aes(x=Specific))+
   ylim(0, 40)+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
-  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5, size=2)+
   ggtitle("Singletons by substrate")
 
-  #run mapping script lines 7:28
-  singletons_us<-singletons_df#[which(!is.na(singletons_df$State)),]
-  p0 <- ggplot(data = us_states,
-               mapping = aes(x = long, y = lat,
-                             group = group, fill = Clim.Region))
+#run mapping script lines 25:31
+#need to adjust long and lat values to be plotted with us_map package using us_transform
+mappable<-singletons_df[which(!is.na(singletons_df$Long)),]
+temp<-usmap_transform(mappable[c(7,6)])
+isolates_to_plot<-merge(mappable, temp, by=c("Long", "Lat"))
+isolates_to_plot<-merge(isolates_to_plot, regions[c(2,3)], by="State")
+
+p0 <- ggplot(data = us_states,
+             mapping = aes(x =long, y = lat,
+                           group = group, fill = Region,
+                           alpha=.9))
 p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
   scale_fill_manual(values = color_key$col)+
   theme_bw()+
-  geom_jitter(data=singletons_us, aes(x=Long, y=Lat), 
+  geom_jitter(data=isolates_to_plot, aes(x=Long.1, y=Lat.1), 
               inherit.aes = FALSE, width=.5, shape=1)+ 
   theme(legend.position = "none")+
-  ggtitle("Singleton isolation locations")
   coord_equal()
 
-ggarrange(b, a, p1, widths=c(2,1))
+ggarrange(b, a, p1, widths=c(4,1))
 quartz.save("~/SurveyPaper/Figures/Singleton_descriptive_figure.pdf", type="pdf")
 
-#cosmopolitan descriptive figure/table
-#cosomo def - current - species isolated z times or more from 2 different regions
-z<-3
-n<-z*2
-n_or_more<-as.character(set_isolates[which(set_isolates$Freq>=n),1])
-n_or_more<-raw_WY_dataframe[which(raw_WY_dataframe$Species %in% n_or_more),]
+#cosmopolitan descriptive figure/table #Updated 08-24-20 to reflect new set of cosmo spp.
+# definition - those species that were isolated when they were expected 2 or more times and 
+#not isolated when expected 1 or less times. 
+
 regions<-read.delim("~/SurveyPaper/data/tables_for_scripts/NOAA_US_Climate_Regions.txt",
                     header=TRUE, stringsAsFactors=FALSE)
-cosmodf<-merge(n_or_more, regions[c(2:3)], by="State")
-tbl<-data.frame(table(cosmodf$Species, cosmodf$Region))
-tbl<-tbl[which(tbl$Freq>=3),]
-repeats<-which(duplicated(tbl$Var1))
-cosmo_sp<-as.character(tbl$Var1[repeats])
-cosmodf<-cosmodf[which(cosmodf$Species %in% cosmo_sp),]
+cosmodf<-read.delim("~/SurveyPaper/data/Cosmopolitans_foundexp>1_notfoundexp<=1.tsv",
+                    header=TRUE, stringsAsFactors=FALSE)
 
-write.table(cosmodf, "~/SurveyPaper/data/Cosmopolitan_z=3.tsv", sep="\t", quote=FALSE)
-toplot<-unique(cosmodf[c(29,30,31)])
+toplot<-unique(cosmodf[c(29,30)])
 a<-ggplot(toplot, aes(x=Subphylum))+
   geom_bar()+
   ylab("No.")+
   xlab("")+
-  ylim(0, 40)+
-  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  ylim(0, 10)+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5, size=2)+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
   ggtitle("Cosmopolitan\nby subphylum")
 
-toplot<-unique(cosmodf[c(21,29,11)])
+toplot<-unique(cosmodf[c(22,29,10)])
+toplot$pvalue<-NA
+toplot$pvalue[which(toplot$Specific=="Soil")]<-"***"
 b<-ggplot(toplot, aes(x=Specific))+
   geom_bar()+
   ylab("No.")+
   xlab("")+
-  ylim(0, 400)+
+  geom_text(aes(x=Specific, label= pvalue, y=155), size=2)+
+  ylim(0, 175)+
   theme_bw()+
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
   geom_text(stat='count', aes(label=..count..), vjust=-.5, size=2)+
   ggtitle("Cosmopolitan by substrate")
 
-#run mapping script lines 7:28
-cosmo_us<-cosmodf#[which(!is.na(singletons_df$State)),]
+#run mapping script lines 25:32
+mappable<-cosmodf[which(!is.na(cosmodf$Long)),]
+temp<-usmap_transform(mappable[c(7,6)])
+isolates_to_plot<-merge(mappable, temp, by=c("Long", "Lat"))
+isolates_to_plot<-merge(isolates_to_plot, regions[c(2,3)], by="State")
+
+
 p0 <- ggplot(data = us_states,
              mapping = aes(x = long, y = lat,
-                           group = group, fill = Clim.Region))
-p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
+                           group = group, fill = Region,
+                           alpha=.9), show.legend = FALSE)
+p1<-  p0 + geom_polygon(color = "gray90", size = 0.1, show.legend = FALSE)+
   scale_fill_manual(values = color_key$col)+
+  scale_color_manual(values = brewer.pal(name = "Paired", n=11))+
   theme_bw()+
-  geom_jitter(data=cosmo_us, aes(x=Long, y=Lat), 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  geom_jitter(data=isolates_to_plot, aes(x=Long.1, y=Lat.1, col=Species), 
               inherit.aes = FALSE, width=.5, shape=1)+ 
-  theme(legend.position = "none")+
   ggtitle("Cosmopolitan isolation locations")+
 coord_equal()
 
-ggarrange(b, a, p1, widths=c(2,1))
+p1
+quartz.save("~/SurveyPaper/Figures/Cosmopolitan_map.pdf", type="pdf")
+
+
+ggarrange(b, a, p1, widths=c(4,1))
 quartz.save("~/SurveyPaper/Figures/Cosmopolitan_descriptive_figure.pdf", type="pdf")
+
+
+#regionally restricted descriptive figures
+regions<-read.delim("~/SurveyPaper/data/tables_for_scripts/NOAA_US_Climate_Regions.txt",
+                    header=TRUE, stringsAsFactors=FALSE)
+regional<-read.delim("~/SurveyPaper/data/Regionally_restricted_foundexp=1_notfoundexp>2.tsv",
+                    header=TRUE, stringsAsFactors=FALSE)
+#run mapping script lines 25:32
+mappable<-regional[which(!is.na(regional$Long)),]
+temp<-usmap_transform(mappable[c(7,6)])
+isolates_to_plot<-merge(mappable, temp, by=c("Long", "Lat"))
+isolates_to_plot<-merge(isolates_to_plot, regions[c(2,3)], by="State")
+
+toplot<-unique(regional[c(29,30)])
+a<-ggplot(toplot, aes(x=Subphylum))+
+  geom_bar()+
+  ylab("No.")+
+  xlab("")+
+  ylim(0, 15)+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
+  ggtitle("Regionally restricted\nby subphylum")
+
+toplot<-unique(regional[c(22,29,10)])
+b<-ggplot(toplot, aes(x=Specific))+
+  geom_bar()+
+  ylab("No.")+
+  xlab("")+
+  #geom_text(aes(x=Specific, label= pvalue, y=155), size=2)+
+  ylim(0, 20)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
+  geom_text(stat='count', aes(label=..count..), vjust=-.5, size=2)+
+  ggtitle("Regionally restricted by substrate")
+
+#run mapping script lines 7:28
+p0 <- ggplot(data = us_states,
+             mapping = aes(x = long, y = lat,
+                           group = group, fill = Region,
+                           alpha=.9), show.legend = FALSE)
+p1<-  p0 + geom_polygon(color = "gray90", size = 0.1, show.legend = FALSE)+
+  scale_fill_manual(values = color_key$col)+
+  scale_color_manual(values = colorRampPalette(brewer.pal(12, "Paired"))(16))+
+  theme_bw()+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
+  geom_jitter(data=isolates_to_plot, aes(x=Long.1, y=Lat.1, col=Species), 
+              inherit.aes = FALSE, width=.5, shape=1)+ 
+  ggtitle("Regionally restricted isolation locations")+
+  coord_equal()
+
+p1
+quartz.save("~/SurveyPaper/Figures/Regional_map.pdf", type="pdf")
+
+
+ggarrange(b, a, p1, widths=c(4,1), heights = c(1.5,2))
+quartz.save("~/SurveyPaper/Figures/Regional_descriptive_figure.pdf", type="pdf")
+
+
 
 
 
