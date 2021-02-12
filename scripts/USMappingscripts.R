@@ -51,3 +51,27 @@ p0 <- ggplot(data = us_states,
   coord_equal()
 
 quartz.save("~/SurveyPaper/Figures/Map_of_all_isolates_USA.pdf", type="pdf")
+
+
+
+mappable<-raw_WY_dataframe[which(raw_WY_dataframe$Species=="Candida sake"),]
+mappable<-mappable[which(!is.na(mappable$Long)),]
+temp<-usmap_transform(mappable[c(7,6)])
+isolates_to_plot<-merge(mappable, temp, by=c("Long", "Lat"))
+isolates_to_plot<-merge(isolates_to_plot, regions[c(2,3)], by="State")
+
+p0 <- ggplot(data = us_states,
+             mapping = aes(x =long, y = lat,
+                           group = group, fill = Region,
+                           alpha=.9))
+p1<- p0 + geom_polygon(color = "gray90", size = 0.1)+
+  scale_fill_manual(values = color_key$col)+
+  theme_bw()+
+  geom_jitter(data=isolates_to_plot, aes(x=Long.1, y=Lat.1), 
+              inherit.aes = FALSE, width=.5, shape=1)+ 
+  geom_text(data=TotalsByState, aes(x=LongCenter.1, y=LatCenter.1, label=No..independent.isolations, fontface=2), 
+            inherit.aes = FALSE, size=3)+
+  theme(legend.position = "none")+
+  coord_equal()
+
+quartz.save("~/SurveyPaper/Figures/Regional_detection_example.pdf", type="pdf")

@@ -239,10 +239,12 @@ quartz.save("~/SurveyPaper/Figures/Subphylum_descriptive_figure.pdf", type="pdf"
 
 phyls_temps<-unique(raw_WY_dataframe[c(22,29,30,23)])
 phyls_temps<-phyls_temps[which(!phyls_temps$IsoTemp=="Unknown"),]
+phyls_temps<-phyls_temps[which(!phyls_temps$Subphylum=="Taphrinomycotina"),]
 phyls_temps$IsoTemp<-as.factor(phyls_temps$IsoTemp)
 phyls_temps$IsoTemp = factor(phyls_temps$IsoTemp,levels(phyls_temps$IsoTemp)[c(4,1,2,3)])
 c<-ggplot(phyls_temps, aes(x=IsoTemp, fill=Subphylum))+
   geom_bar()+
+  scale_fill_manual(values=color_pal)+
   ylab("No.")+
   theme_bw()
 
@@ -294,7 +296,7 @@ plants<-length(unique(plant_genus_WY_dataframe$Plant.Genus))
 yeast<-length(unique(plant_genus_WY_dataframe$Species))
 pairs<-data.frame(table(plant_genus_WY_dataframe$Plant.Genus, plant_genus_WY_dataframe$Species))
 comb<-length(which(pairs$Freq>0))
-for_descrip_fig<-data.frame(c("Yeast sp.", "Plant genera", "Combinations observed"),
+for_descrip_fig<-data.frame(c("Yeast taxanomic units", "Plant genera", "Combinations observed"),
                             c(yeast, plants, comb))
 colnames(for_descrip_fig)<-c("V1", "V2")
 
@@ -336,7 +338,7 @@ isotemp<-length(unique(iso_temp_WY_dataframe$IsoTemp))
 yeast<-length(unique(iso_temp_WY_dataframe$Species))
 pairs<-data.frame(table(iso_temp_WY_dataframe$IsoTemp, iso_temp_WY_dataframe$Species))
 comb<-length(which(pairs$Freq>0))
-for_descrip_fig<-data.frame(c("Yeast sp.", "Isolation temps", "Combinations observed"),
+for_descrip_fig<-data.frame(c("Yeast taxanomic units", "Isolation temps", "Combinations observed"),
                             c(yeast, isotemp, comb))
 colnames(for_descrip_fig)<-c("V1", "V2")
 
@@ -380,7 +382,7 @@ substr<-length(unique(Substrate_specific_WY_dataframe$Specific))
 yeast<-length(unique(Substrate_specific_WY_dataframe$Species))
 pairs<-data.frame(table(Substrate_specific_WY_dataframe$Specific, Substrate_specific_WY_dataframe$Species))
 comb<-length(which(pairs$Freq>0))
-for_descrip_fig<-data.frame(c("Yeast sp.", "Specific substrates", "Combinations observed"),
+for_descrip_fig<-data.frame(c("Yeast taxanomic units", "Specific substrates", "Combinations observed"),
                             c(yeast, substr, comb))
 colnames(for_descrip_fig)<-c("V1", "V2")
 
@@ -405,29 +407,6 @@ ggarrange(c, a, b, ncol=1)
 quartz.save("~/SurveyPaper/Figures/Descriptive_figure_for_raw_data_fed_into_permutations.pdf", type="pdf")
 
 
-
-##########
-#####
-#IDing possible "Endemic spp" as those isolated z or more independent times from the same region
-z=3
-ind_iso_sp_by_state<-unique(raw_WY_dataframe[c(22, 29, 25)])
-
-climate_regions<-read.delim("~/SurveyPaper/data/tables_for_scripts/NOAA_US_Climate_Regions.txt",
-                            stringsAsFactors=FALSE)
-climate_regions<-climate_regions[c(2,3)]
-ind_iso_sp_by_state<-merge(ind_iso_sp_by_state, climate_regions, by="State")
-tbl<-data.frame(table(ind_iso_sp_by_state$Species, ind_iso_sp_by_state$Region))
-tbl<-tbl[which(tbl$Freq>0),]
-colnames(tbl)<-c("Species", "Region", "Iso_in_region")
-tbl2<-data.frame(table(tbl$Species))
-colnames(tbl2)<-c("Species", "Number_of_regions")
-tbl3<-merge(tbl, tbl2, by="Species")
-Endemics<-tbl3[which(tbl3$Iso_in_region>=z & tbl3$Number_of_regions==1),]
-
-
-probsRegions<-data.frame(table(ind_iso_sp_by_state$Region))
-colnames(probsRegions)<-c("Region", "No. independent isolations")
-independent_isolations_by_region<-merge
-
-probsRegions$Prob<- probsRegions$Freq/sum(probsRegions$Freq)
-
+#Will's color pallette
+#had to change it to cb friendly
+color_pal <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")

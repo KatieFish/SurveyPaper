@@ -39,7 +39,9 @@ noncosmos<-raw_WY_dataframe[which(!raw_WY_dataframe$Species %in%
 nonregionallyrestricted<-raw_WY_dataframe[which(!raw_WY_dataframe$Species %in%
                                                   regionally_restricted$Species),]
 
-###SPECIFIC SUBSTRATE FISHERS EXACTS
+
+
+###SPECIFIC SUBSTRATE FISHERS EXACTS###
 tbl<-data.frame(table(unique(nonsingletons[c(22,29,10)])$Specific))
 colnames(tbl)<-c("Specific", "NonsingletonObs")
 tbl1<-data.frame(table(unique(singletons[c(22,29,10)])$Specific))
@@ -115,7 +117,7 @@ write.table(substrate_Fisher_df, "~/SurveyPaper/data/Singleton_Cosmo_regional_su
 
 
 
-######SUBPHYUM FISHERS EXACTS **had to fix 08-24 
+######SUBPHYUM FISHERS EXACTS **had to fix 08-24**
 tbl<-data.frame(table(unique(nonsingletons[c(29,30)])$Subphylum))
 colnames(tbl)<-c("Subphylum", "NonsingletonObs")
 tbl1<-data.frame(table(unique(singletons[c(29,30)])$Subphylum))

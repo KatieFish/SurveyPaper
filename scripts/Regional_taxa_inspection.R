@@ -127,6 +127,8 @@ p1<-  p0 + geom_polygon(color = "gray90", size = 0.1, show.legend = FALSE)+
   ggtitle("Sydowia polyspora isolation locations")+
   coord_equal()
 
+
+p1
 quartz.save("~/SurveyPaper/Figures/Sydowia_polyspora_iso_locations.pdf", 
             type="pdf")
 
