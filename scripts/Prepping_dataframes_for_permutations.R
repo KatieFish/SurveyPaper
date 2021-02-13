@@ -288,14 +288,19 @@ S_subsB<-ggplot(plant_genus_WY_dataframe, aes(x=Plant.Genus, fill=Substrate.cate
   theme(legend.key.size = unit(0.075, "cm"), legend.key.width = unit(.10, "cm"),
         legend.text=element_text(size=5))
 
-ggarrange(nrow = 2, S_subsA, S_subsB)
+ggarrange(nrow = 2, S_subsA, S_subsB, labels = c("A", "B"))
 quartz.save("~/SurveyPaper/Figures/Descriptive_fig_of_substr_plantgenus_categories.pdf", type="pdf")
+quartz.save("~/SurveyPaper/Manuscript_supp_figs/Figure_Seight.pdf", type="pdf")
+
 
 #descriptive figure
 plants<-length(unique(plant_genus_WY_dataframe$Plant.Genus))
 yeast<-length(unique(plant_genus_WY_dataframe$Species))
 pairs<-data.frame(table(plant_genus_WY_dataframe$Plant.Genus, plant_genus_WY_dataframe$Species))
 comb<-length(which(pairs$Freq>0))
+#same as with substrates - analysis was done pre-cleanup removal 
+#of one combn. 
+comb<-comb+1
 for_descrip_fig<-data.frame(c("Yeast taxanomic units", "Plant genera", "Combinations observed"),
                             c(yeast, plants, comb))
 colnames(for_descrip_fig)<-c("V1", "V2")
@@ -382,6 +387,9 @@ substr<-length(unique(Substrate_specific_WY_dataframe$Specific))
 yeast<-length(unique(Substrate_specific_WY_dataframe$Species))
 pairs<-data.frame(table(Substrate_specific_WY_dataframe$Specific, Substrate_specific_WY_dataframe$Species))
 comb<-length(which(pairs$Freq>0))
+comb<-715
+#perms were run on dataframe prior to removal of two combns - 
+#so combn == 715
 for_descrip_fig<-data.frame(c("Yeast taxanomic units", "Specific substrates", "Combinations observed"),
                             c(yeast, substr, comb))
 colnames(for_descrip_fig)<-c("V1", "V2")
@@ -403,8 +411,8 @@ rm(substr, yeast, pairs, comb)
  #           quote=FALSE, row.names=FALSE)
 
 
-ggarrange(c, a, b, ncol=1)
-quartz.save("~/SurveyPaper/Figures/Descriptive_figure_for_raw_data_fed_into_permutations.pdf", type="pdf")
+ggarrange(c, a, b, ncol=1, labels = c("A", "B", "C"))
+quartz.save("~/SurveyPaper/Manuscript_supp_figs/Figure_S9new.pdf", type="pdf")
 
 
 #Will's color pallette

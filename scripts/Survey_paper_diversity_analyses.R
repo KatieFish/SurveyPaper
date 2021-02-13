@@ -1,8 +1,14 @@
 require(vegan)
 require(ggplot2)
 
+
+
 #color pal for plotting downstream
 color_pal <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
+
+colfunc <- colorRampPalette(c("khaki", "brown4"))
+colfunc(15)->col_grad
+plot(rep(1,8),col=color_pal,pch=19,cex=3)
 
 #read in raw data
 raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
@@ -295,7 +301,7 @@ quartz.save("~/SurveyPaper/Figures/rarefaction_by_IsoTemp.pdf", type="pdf")
 ##############
 
 #rarefactionfigure1:
-par(mar=c(6,5,1,5))
+par(mar=c(6,4,1,1))
 #par(mfrow=c(2,1))
 layout(matrix(c(1:2, 0, 0), nrow=1, ncol=2, byrow=TRUE), widths = c(2.5,2.5))
 layout.show(n=2)  # to inspect layout                   
@@ -306,30 +312,82 @@ quartz.save("~/SurveyPaper/Figures/Sup_rarefaction_Figure_1.pdf", type="pdf")
 
 
 #H' plots with rarefaction
+Shannon_Wiener_H<-Shannon_Wiener_H[order(Shannon_Wiener_H$diversity.Diversity_matrix..index....shannon..), ]
+SW_order<-c(13,8,15,7,14,9,11,6,4,2,10,3,5,12,1)
+substrate_spp_accum_mat<-substrate_spp_accum_mat[SW_order, ]
+s_s_a_m_rowsums<-rowSums(substrate_spp_accum_mat)
+zoom_in<-substrate_spp_accum_mat[1:11, ]
 
+
+
+####Figure 3 - substrate H' and rarefaction###
 par(mar=c(5,5,1,3))
-layout(matrix(c(1,2,3,4), nrow=2, ncol=2, byrow=TRUE), widths = c(2.5, 2.5))
-layout.show(n=4)  # to inspect layout                   
+layout(matrix(c(1, 2, 1, 3), nrow=2, ncol=2, byrow=TRUE), widths = c(3, 2))
+layout.show(n=3)  # to inspect layout                   
 
 #1
 plot(Shannon_Wiener_H[,2], xaxt='n', ylab="Shannon-Wiener (H')", 
-     main=NA, xlab=NA, cex=1, pch=16)
+     main=NA, xlab=NA, cex=2, pch=16, col=col_grad)
 axis(side=1, at=c(1:nrow(Shannon_Wiener_H)),labels=Shannon_Wiener_H[,1], cex.axis=.65, las=2)
 par(new=T)
-plot(Shannon_Wiener_H[,3], xaxt='n', ylab=NA, xlab=NA, pch=1, cex=1,
-     yaxt='n')
+plot(Shannon_Wiener_H[,3], xaxt='n', ylab=NA, xlab=NA, pch=1, cex=2,
+     yaxt='n', col=col_grad)
 axis(side=4, at=seq(50, 500, 50), labels=seq(50, 500, 50))
-mtext("Sampling density", side=4, line=2.5, cex = .8)
+mtext("Sampling density", side=4, line=2.5, cex = .85)
 legend("topleft", legend=c("H'", "sampling density"), pch=c(16, 1))
 #2
-rarecurve(substrate_spp_accum_mat,label = FALSE, ylab = "No. yeast OTUs", xlab="No. isolates", lwd=.5 )
+rarecurve(substrate_spp_accum_mat,label = FALSE, 
+          ylab = "No. yeast OTUs", xlab="No. isolates", lwd=.5, col=col_grad )
 #3
-plot(x=as.character(Shannon_Wiener_H_2$IsoTemp), y=Shannon_Wiener_H_2[,2], ylab="Shannon-Wiener (H')", 
-     main=NA,cex=1, pch=16, xlab= "Isolation temperature")
-#4
-rarecurve(isoTemp_spp_accum_mat, label=TRUE, ylab = "No. yeast OTUs", xlab="No. isolates", lwd=1)
-
+rarecurve(zoom_in, label=FALSE,
+          ylab = "No. yeast OTUs", xlab="No. isolates", lwd=.5, col=col_grad[1:11])
 quartz.save("~/SurveyPaper/Figures/updatedfig3_2-9-21.pdf", type="pdf")
+######
+
+######################
+#Figure 4 - Isotemp H' and rarefaction
+#####################
+
+Shannon_Wiener_H_2<-Shannon_Wiener_H_2[order(as.numeric(Shannon_Wiener_H_2$IsoTemp)), ]
+sw_isotemp_order<-c(4,1,2,3)
+isoTemp_spp_accum_mat<-isoTemp_spp_accum_mat[sw_isotemp_order, ]
+
+par(mar=c(5,4,1,1))
+layout(matrix(c(1,2,0,0), nrow=1, ncol=2, byrow=TRUE), widths = c(3, 2))
+layout.show(n=2)  # to inspect layout                   
+
+#1
+plot(x=Shannon_Wiener_H_2$IsoTemp, y=Shannon_Wiener_H_2[,2], ylab="Shannon-Wiener (H')", 
+     main=NA,cex=2, pch=16, xlab= "Isolation temperature", col=col_grad[c(1,5,10,15)])
+#2
+rarecurve(isoTemp_spp_accum_mat, label=FALSE, 
+          ylab = "No. yeast OTUs", xlab="No. isolates", lwd=1, col=col_grad[c(1,5,10,15)])
+
+quartz.save("~/SurveyPaper/Figures/updatedfig4_2-12-21.pdf", type="pdf")
+
+########
+#Suppl. subphy by temp H' figure
+########
+
+par(mar=c(5,4,1,1))
+layout(matrix(c(1,2,3,0), nrow=2, ncol=2, byrow=TRUE), widths = c(3,3))
+layout.show(n=3)  # to inspect layout                   
+
+#Basdio
+plot(x=Basidio_Shannon_Wiener_H$IsoTemp, y=Basidio_Shannon_Wiener_H[,1], ylab="Shannon-Wiener (H')", 
+     main=NA,cex=2, ylim=c(1,4.5), xlim=c(0,32), pch=16, xlab= "Isolation temperature", col=color_pal[1])
+legend("topleft", legend="Basidiomycota", box.lwd=0)
+#Pezizo
+plot(x=Pezizo_Shannon_Wiener_H$IsoTemp, y=Pezizo_Shannon_Wiener_H[,1], ylab="Shannon-Wiener (H')", 
+     main=NA,cex=2, pch=16,ylim=c(1,4.5),xlim=c(0,32), xlab= "Isolation temperature", col=color_pal[2])
+legend("topleft", legend="Pezizomycotina", box.lwd=0)
+#Saccharo
+plot(x=Saccharo_Shannon_Wiener_H$IsoTemp, y=Saccharo_Shannon_Wiener_H[,1], ylab="Shannon-Wiener (H')", 
+     main=NA,cex=2, pch=16, ylim=c(1,4.5),xlim=c(0,32),xlab= "Isolation temperature", col=color_pal[3])
+legend("topleft", legend="Saccharomycotina", box.lwd=0)
+
+quartz.save("~/SurveyPaper/Figures/updated_Diversity_by_IsoTemp_by_subphylum.pdf", type="PDF")
+
 
 
 
