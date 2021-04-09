@@ -40,7 +40,7 @@ raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
 
 #merged into raw wy dataframe
 gluc_comp<-merge(raw_WY_dataframe,
-                 gluc_conc_comp_datatable[c(1,3)], by="StrainID")
+                 gluc_conc_comp_datatable[c(1,3)], by="StrainID", all=TRUE)
 
 #496 total isolations (about 25%) of isolations are accompanied by gluc percent data
 length(which(gluc_comp$gluc_percent==8))

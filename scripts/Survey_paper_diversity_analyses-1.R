@@ -7,9 +7,7 @@ library(ggplotify)
 
 #color pal for plotting downstream
 color_pal <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#999999")
-
 colfunc <- colorRampPalette(c("khaki", "brown4"))
-
 colfunc(15)->col_grad
 plot(rep(1,8),col=color_pal,pch=19,cex=3)
 library(RColorBrewer)
@@ -33,28 +31,28 @@ raw_WY_dataframe<-read.delim("~/SurveyPaper/data/WY_df_2018-02-08.tsv",
 #####################################################
 
 #retain unique combinations of setID-specific substrate-species
-Diversity_df<-unique(raw_WY_dataframe[c(10, 22, 29)])
+Diversity_df<-unique(raw_WY_dataframe[c(8, 22, 29)])
 #eliminate NA specific categories
-Diversity_df<-Diversity_df[which(!is.na(Diversity_df$Specific)), ]
+Diversity_df<-Diversity_df[which(!is.na(Diversity_df$Associated)), ]
 #keep this data for later
 store<-Diversity_df
 # quantify how many times each species-specific substrate is present
-Diversity_df<-data.frame(table(Diversity_df$Species, Diversity_df$Specific))
-colnames(Diversity_df)<-c("Species", "Specific", "number")
+Diversity_df<-data.frame(table(Diversity_df$Species, Diversity_df$Associated))
+colnames(Diversity_df)<-c("Species", "Associated", "number")
 
 
 #Set up matrix for vegan analyses
 #rows are (OTUs)
 #columns are substrates 
-Diversity_matrix<-matrix(nrow=length(unique(Diversity_df$Species)), ncol=length(unique(Diversity_df$Specific)))
-colnames(Diversity_matrix)<-unique(Diversity_df$Specific)
+Diversity_matrix<-matrix(nrow=length(unique(Diversity_df$Species)), ncol=length(unique(Diversity_df$Associated)))
+colnames(Diversity_matrix)<-unique(Diversity_df$Associated)
 row.names(Diversity_matrix)<-unique(Diversity_df$Species)
 
 #populate matrix
 for (i in 1:nrow(Diversity_matrix)){
   ndf<-Diversity_df[which(Diversity_df$Species==row.names(Diversity_matrix)[i]), ]
   for (j in 1:ncol(Diversity_matrix)) {
-    ndf1<-ndf[which(ndf$Specific==colnames(Diversity_matrix)[j]),]
+    ndf1<-ndf[which(ndf$Associated==colnames(Diversity_matrix)[j]),]
     Diversity_matrix[i,j]<-ndf1$number[1]
   }
 }
@@ -64,30 +62,26 @@ rm(ndf, ndf1, i, j)
 Diversity_matrix<-t(Diversity_matrix)
 
 #find unique times each substrate was sampled (is greater than number of unique samples
-# or setIDs by 41. There are 41 setIDs that are assigned to more than one specific substrate)
+# or setIDs by 41. There are 41 setIDs that are assigned to more than one Associated substrate)
 substrate_sampling<-data.frame(table(unique(store[c(1,2)])[1]))
-colnames(substrate_sampling)[1]<-"Specific"
+colnames(substrate_sampling)[1]<-"Associated"
 # removing the substrates that are sampled less than 5 times. 
 # leaves the 15 top-sampled substrates
-over5<-substrate_sampling$Specific[which(substrate_sampling$Freq>5)]
+over20<-substrate_sampling$Associated[which(substrate_sampling$Freq>20)]
 Diversity_matrix<-Diversity_matrix[which(
-  row.names(Diversity_matrix) %in% over5),]
+  row.names(Diversity_matrix) %in% over20),]
 #store as seperate dataframe for downstream
 Diversity_matrix->substrate_spp_accum_mat
 
 ###Species Diversity using Shannon-Weiner###
 # find Shannon-Wiener index using Vegan
 Shannon_Wiener_H<-data.frame(diversity(Diversity_matrix, index="shannon"))
-Shannon_Wiener_H$Specific<-row.names(Shannon_Wiener_H)
+Shannon_Wiener_H$Associated<-row.names(Shannon_Wiener_H)
 Shannon_Wiener_H<-Shannon_Wiener_H[order(Shannon_Wiener_H$diversity.Diversity_matrix..index....shannon..), ]
 
 ###Add sampling depth to dataframe 
-Shannon_Wiener_H<-merge(Shannon_Wiener_H, substrate_sampling, by="Specific")
+Shannon_Wiener_H<-merge(Shannon_Wiener_H, substrate_sampling, by="Associated")
 
-#Linear regression to see how sampling density affects H'
-plot(x=Shannon_Wiener_H$Freq, y=Shannon_Wiener_H$diversity.Diversity_matrix..index....shannon..)
-summary(lm(Shannon_Wiener_H$diversity.Diversity_matrix..index....shannon.. ~
-             Shannon_Wiener_H$Freq))
 
 write.table(Shannon_Wiener_H, "~/SurveyPaper/data/Shannon_Weiner_substr_table.tsv", sep="\t", quote=FALSE, row.name=FALSE)
 
@@ -152,7 +146,7 @@ Shannon_Wiener_H_2<-merge(Shannon_Wiener_H_2, substrate_sampling, by="IsoTemp")
 write.table(Shannon_Wiener_H_2, "~/SurveyPaper/data/Shannon_Weiner_IsoTemp.tsv", sep="\t", quote=FALSE, row.name=FALSE)
 
 
-rm(substrate_sampling, store, over5, Diversity_df, Diversity_matrix)
+rm(substrate_sampling, store, over20, Diversity_df, Diversity_matrix)
 #####################################################
 # SW by temp and phylum
 #####################################################
@@ -193,7 +187,7 @@ rm(ndf, ndf1, i, j)
 #values are #of indendent times each species is found with each IsoTemp
 Diversity_matrix<-t(Diversity_matrix)
 
-###Basidio specific analysis
+###Basidio Associated analysis
 Basidio_div_matrix<-Diversity_matrix[,which(colnames(Diversity_matrix) %in% Basidios)]
 Basidio_Shannon_Wiener_H<-data.frame(diversity(Basidio_div_matrix, index="shannon"))
 Basidio_Shannon_Wiener_H$IsoTemp<-row.names(Basidio_Shannon_Wiener_H)
@@ -201,7 +195,7 @@ Basidio_Shannon_Wiener_H<-Basidio_Shannon_Wiener_H[order(Basidio_Shannon_Wiener_
 
 write.table(Basidio_Shannon_Wiener_H, "~/SurveyPaper/data/Shannon_Weiner_IsoTemp_Basidios_only.tsv", sep="\t", quote=FALSE, row.name=FALSE)
 
-###Pezizo specific analysis
+###Pezizo Associated analysis
 Pezizo_div_matrix<-Diversity_matrix[,which(colnames(Diversity_matrix) %in% Pezizos)]
 Pezizo_Shannon_Wiener_H<-data.frame(diversity(Pezizo_div_matrix, index="shannon"))
 Pezizo_Shannon_Wiener_H$IsoTemp<-row.names(Pezizo_Shannon_Wiener_H)
@@ -209,7 +203,7 @@ Pezizo_Shannon_Wiener_H<-Pezizo_Shannon_Wiener_H[order(Pezizo_Shannon_Wiener_H$I
 
 write.table(Pezizo_Shannon_Wiener_H, "~/SurveyPaper/data/Shannon_Weiner_IsoTemp_Pezizos_only.tsv", sep="\t", quote=FALSE, row.name=FALSE)
 
-###Saccharo specific analysis
+###Saccharo Associated analysis
 Saccharo_div_matrix<-Diversity_matrix[,which(colnames(Diversity_matrix) %in% Saccharos)]
 Saccharo_Shannon_Wiener_H<-data.frame(diversity(Saccharo_div_matrix, index="shannon"))
 Saccharo_Shannon_Wiener_H$IsoTemp<-row.names(Saccharo_Shannon_Wiener_H)
@@ -360,10 +354,10 @@ layout.show(n=3)  # to inspect layout
 
 #1
 plot(y=log(Shannon_Wiener_H$diversity.Diversity_matrix..index....shannon..),
-     x=log(Shannon_Wiener_H$Freq), col=col_grad, pch=19, cex=2, 
+     x=log(Shannon_Wiener_H$Freq), col=col_grad[1:4], pch=19, cex=2, 
      ylab="log(Shannon-Weiner H')", xlab="log(Sampling density)")
 text(y=log(Shannon_Wiener_H$diversity.Diversity_matrix..index....shannon..),
-     x=log(Shannon_Wiener_H$Freq), labels=Shannon_Wiener_H$Specific,
+     x=log(Shannon_Wiener_H$Freq), labels=Shannon_Wiener_H$Associated,
      adj=c(.5,1.9), cex=.7)
 #2
 rarecurve(substrate_spp_accum_mat,label = FALSE, 
